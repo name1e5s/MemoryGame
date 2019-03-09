@@ -36,6 +36,7 @@ class LoginDialog_UI {
     passWord = new QtMaterialTextField(Dialog);
     passWord->setGeometry(QRect(210, 340, 221, 48));
     passWord->setLabel("Password");
+    passWord->setEchoMode(QLineEdit::Password);
 
     pushButton = new QtMaterialFlatButton(Dialog);
     pushButton->setGeometry(QRect(250, 410, 141, 36));
@@ -46,9 +47,9 @@ class LoginDialog_UI {
 
   void retranslateUi(QDialog* Dialog) {
     Dialog->setWindowTitle(
-        QApplication::translate("Dialog", "Dialog", nullptr));
+        QApplication::translate("Login", "Login", nullptr));
     label->setText(QString());
-    pushButton->setText(QApplication::translate("Dialog", "Login", nullptr));
+    pushButton->setText(QApplication::translate("Login", "Login", nullptr));
   }
 };
 
