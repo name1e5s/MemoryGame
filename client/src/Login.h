@@ -2,6 +2,7 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include "RegisterDialog.h"
 
 namespace Ui {
 class LoginDialog;
@@ -19,6 +20,7 @@ class LoginDialog : public QDialog {
 
  private:
   Ui::LoginDialog* ui;
+  RegisterDialog* reg;
 };
 
 #endif  // DIALOG_H

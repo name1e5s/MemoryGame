@@ -17,7 +17,8 @@ class LoginDialog_UI {
   QLabel* label;
   QtMaterialTextField* userName;
   QtMaterialTextField* passWord;
-  QtMaterialFlatButton* pushButton;
+  QtMaterialFlatButton* loginButton;
+  QtMaterialFlatButton* registerButton;
 
   void setupUi(QDialog* Dialog) {
     Dialog->setObjectName(QString::fromUtf8("Login"));
@@ -30,17 +31,21 @@ class LoginDialog_UI {
     label->setPixmap(QPixmap(QString::fromUtf8(":/logo/assets/logo.png")));
 
     userName = new QtMaterialTextField(Dialog);
-    userName->setGeometry(QRect(210, 280, 221, 48));
+    userName->setGeometry(QRect(210, 280, 220, 48));
     userName->setLabel("User Name");
 
     passWord = new QtMaterialTextField(Dialog);
-    passWord->setGeometry(QRect(210, 340, 221, 48));
+    passWord->setGeometry(QRect(210, 340, 220, 48));
     passWord->setLabel("Password");
     passWord->setEchoMode(QLineEdit::Password);
 
-    pushButton = new QtMaterialFlatButton(Dialog);
-    pushButton->setGeometry(QRect(250, 410, 141, 36));
-    pushButton->setBackgroundMode(Qt::OpaqueMode);
+    loginButton = new QtMaterialFlatButton(Dialog);
+    loginButton->setGeometry(QRect(210, 410, 105, 32));
+    loginButton->setBackgroundMode(Qt::OpaqueMode);
+
+    registerButton = new QtMaterialFlatButton(Dialog);
+    registerButton->setGeometry(QRect(335, 410, 105, 32));
+    registerButton->setBackgroundMode(Qt::OpaqueMode);
 
     retranslateUi(Dialog);
   }
@@ -48,7 +53,9 @@ class LoginDialog_UI {
   void retranslateUi(QDialog* Dialog) {
     Dialog->setWindowTitle(QApplication::translate("Login", "Login", nullptr));
     label->setText(QString());
-    pushButton->setText(QApplication::translate("Login", "Login", nullptr));
+    loginButton->setText(QApplication::translate("Login", "Login", nullptr));
+    registerButton->setText(
+        QApplication::translate("Login", "Register", nullptr));
   }
 };
 

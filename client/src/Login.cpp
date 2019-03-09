@@ -3,11 +3,14 @@
 #include "Login_ui.h"
 
 LoginDialog::LoginDialog(QWidget* parent)
-    : QDialog(parent), ui(new Ui::LoginDialog) {
+    : QDialog(parent), ui(new Ui::LoginDialog), reg(new RegisterDialog) {
   ui->setupUi(this);
   setFixedSize(this->width(), this->height());
-  connect(ui->pushButton, &QtMaterialFlatButton::clicked, this,
+  connect(ui->loginButton, &QtMaterialFlatButton::clicked, this,
           &LoginDialog::checkPassword);
+
+  connect(ui->registerButton, &QtMaterialFlatButton::clicked, reg,
+          &RegisterDialog::exec);
 }
 
 LoginDialog::~LoginDialog() {

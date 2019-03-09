@@ -10,12 +10,15 @@ PRE_TARGETDEPS = $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
 SOURCES += \
         main.cpp \
     MainWindow.cpp \
-    Login.cpp
+    Login.cpp \
+    RegisterDialog.cpp
 
 HEADERS += \
     MainWindow.h \
     Login.h \
-    Login_ui.h
+    Login_ui.h \
+    RegisterDialog.h \
+    RegisterDialog_ui.h
 
 FORMS += \
     MainWindow.ui
