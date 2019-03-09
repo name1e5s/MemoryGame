@@ -9,10 +9,16 @@ INCLUDEPATH += $$top_srcdir/components/
 PRE_TARGETDEPS = $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
 SOURCES += \
         main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    Login.cpp
 
 HEADERS += \
-    MainWindow.h
+    MainWindow.h \
+    Login.h \
+    Login_ui.h
 
 FORMS += \
     MainWindow.ui
+
+RESOURCES += \
+    assets.qrc
