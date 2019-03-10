@@ -39,7 +39,7 @@
    <property name="styleSheet">
     <string notr="true">QWidget {background: white;}</string>
    </property>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QWidget" name="gameFieldWidget" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -48,8 +48,11 @@
       <height>640</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -58,19 +61,129 @@
       <height>80</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Fira Code</family>
-      <pointsize>48</pointsize>
-      <weight>75</weight>
-      <bold>true</bold>
-     </font>
+    <property name="title">
+     <string>GroupBox</string>
     </property>
-    <property name="text">
-     <string>Go Fuck Yourself</string>
+    <widget class="QPushButton" name="startNewGameButton">
+     <property name="geometry">
+      <rect>
+       <x>920</x>
+       <y>0</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pauseGameButton">
+     <property name="geometry">
+      <rect>
+       <x>1000</x>
+       <y>0</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+    <widget class="QLCDNumber" name="levelNumber">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>0</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Sunken</enum>
+     </property>
+     <property name="digitCount">
+      <number>2</number>
+     </property>
+     <property name="segmentStyle">
+      <enum>QLCDNumber::Flat</enum>
+     </property>
+     <property name="value" stdset="0">
+      <double>50.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QLabel" name="UserID">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>80</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="updateProgress">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>0</y>
+       <width>16</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+     <property name="textVisible">
+      <bool>false</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="progressBar">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>0</y>
+       <width>741</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+     <property name="textVisible">
+      <bool>false</bool>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>80</y>
+      <width>1080</width>
+      <height>1</height>
+     </rect>
     </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+    <property name="lineWidth">
+     <number>1</number>
+    </property>
+    <property name="midLineWidth">
+     <number>0</number>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
