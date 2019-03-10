@@ -3,6 +3,7 @@
 
 #include <qtmaterialflatbutton.h>
 #include <qtmaterialtextfield.h>
+#include <qtmaterialraisedbutton.h>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
@@ -18,7 +19,7 @@ class Ui_RegisterDialog {
   QtMaterialTextField* passWord;
   QtMaterialTextField* realName;
   QFrame* frame;
-  QtMaterialFlatButton* pushButton;
+  QtMaterialRaisedButton* pushButton;
 
   void setupUi(QDialog* RegisterDialog) {
     RegisterDialog->resize(640, 480);
@@ -46,7 +47,7 @@ class Ui_RegisterDialog {
     frame->setFrameShape(QFrame::StyledPanel);
     frame->setFrameShadow(QFrame::Raised);
 
-    pushButton = new QtMaterialFlatButton(RegisterDialog);
+    pushButton = new QtMaterialRaisedButton(RegisterDialog);
     pushButton->setGeometry(QRect(370, 360, 240, 36));
     pushButton->setBackgroundMode(Qt::OpaqueMode);
 
