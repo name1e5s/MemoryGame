@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "CustomWidget.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow {
 
  private:
   Ui::MainWindow* ui;
+  CustomWidget* customWidget;
 };
 
 #endif  // MAINWINDOW_H

@@ -18,7 +18,8 @@ HEADERS += \
     Login.h \
     Login_ui.h \
     RegisterDialog.h \
-    RegisterDialog_ui.h
+    RegisterDialog_ui.h \
+    CustomWidget.h
 
 FORMS += \
     MainWindow.ui

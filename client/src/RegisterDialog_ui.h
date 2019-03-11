@@ -2,8 +2,8 @@
 #define UI_REGISTERDIALOG_H
 
 #include <qtmaterialflatbutton.h>
-#include <qtmaterialtextfield.h>
 #include <qtmaterialraisedbutton.h>
+#include <qtmaterialtextfield.h>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>

@@ -39,19 +39,6 @@
    <property name="styleSheet">
     <string notr="true">QWidget {background: white;}</string>
    </property>
-   <widget class="QWidget" name="gameFieldWidget" native="true">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>80</y>
-      <width>1080</width>
-      <height>640</height>
-     </rect>
-    </property>
-    <property name="autoFillBackground">
-     <bool>false</bool>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
