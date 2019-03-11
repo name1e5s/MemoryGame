@@ -1,7 +1,6 @@
 #ifndef CUSTOMWIDGET_H
 #define CUSTOMWIDGET_H
 #include <QColor>
-#include <QDebug>
 #include <QtWidgets/QWidget>
 
 class CustomWidget : public QWidget {
@@ -19,7 +18,6 @@ class CustomWidget : public QWidget {
     pal.setColor(QPalette::Background, backgroundColor);
     setAutoFillBackground(true);
     setPalette(pal);
-    qDebug() << "Set" << backgroundColor;
   }
 
  private:
