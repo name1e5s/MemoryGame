@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "CustomWidget.h"
+#include "QGameTextField.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,6 +19,7 @@ class MainWindow : public QMainWindow {
  private:
   Ui::MainWindow* ui;
   CustomWidget* customWidget;
+  QGameTextField* gameTextField;
 };
 
 #endif  // MAINWINDOW_H

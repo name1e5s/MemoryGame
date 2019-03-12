@@ -26,7 +26,7 @@ class CustomWidget : public QWidget {
 
  private:
   QColor backgroundColor;
-  const QColor defaultColor = QColor("#eeeeee");
+  const QColor defaultColor = QColor("#616161");
   const QColor rightColor = QColor("#009688");
   const QColor wrongColor = QColor("#f44336");
   const int animationTime = 618;

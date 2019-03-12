@@ -12,7 +12,8 @@ SOURCES += \
     MainWindow.cpp \
     Login.cpp \
     RegisterDialog.cpp \
-    CustomWidget.cpp
+    CustomWidget.cpp \
+    QGameTextField.cpp
 
 HEADERS += \
     MainWindow.h \
@@ -20,7 +21,8 @@ HEADERS += \
     Login_ui.h \
     RegisterDialog.h \
     RegisterDialog_ui.h \
-    CustomWidget.h
+    CustomWidget.h \
+    QGameTextField.h
 
 FORMS += \
     MainWindow.ui
