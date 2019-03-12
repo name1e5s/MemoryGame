@@ -1,9 +1,10 @@
-#include "MainWindow.h"
 #include <QDesktopWidget>
 #include <QLayout>
 #include <QPropertyAnimation>
 #include <QStyle>
+
 #include "CustomWidget.h"
+#include "MainWindow.h"
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget* parent)
   gameTextField->setAlignment(Qt::AlignCenter);
   gameTextField->setFont(QFont("Roboto", 72, QFont::Medium));
 
-  gameTextField->setAnswer(QString("GO FUCK YOURSELF"));
+  gameTextField->setAnswer(QString("114514"));
 
   gameTextField->setFocus(Qt::OtherFocusReason);
 
@@ -31,6 +32,8 @@ MainWindow::MainWindow(QWidget* parent)
           &CustomWidget::rightColorAnimation);
   connect(gameTextField, &QGameTextField::wrong, customWidget,
           &CustomWidget::wrongColorAnimation);
+  connect(ui->pauseGameButton, &QPushButton::clicked, gameTextField,
+          &QGameTextField::showAnswer);
 
   setFixedSize(this->width(), this->height());
   setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,

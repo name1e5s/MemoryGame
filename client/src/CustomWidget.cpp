@@ -1,10 +1,10 @@
-#include "CustomWidget.h"
 #include <QPropertyAnimation>
+
+#include "CustomWidget.h"
 
 void CustomWidget::rightColorAnimation(void) {
   QPropertyAnimation* animation =
       new QPropertyAnimation(this, "backgroundColor");
-  animation->setStartValue(defaultColor);
   animation->setEndValue(defaultColor);
   animation->setKeyValueAt(0.618, rightColor);
   animation->setEasingCurve(QEasingCurve::OutInQuad);
@@ -15,7 +15,6 @@ void CustomWidget::rightColorAnimation(void) {
 void CustomWidget::wrongColorAnimation(void) {
   QPropertyAnimation* animation =
       new QPropertyAnimation(this, "backgroundColor");
-  animation->setStartValue(defaultColor);
   animation->setEndValue(defaultColor);
   animation->setKeyValueAt(0.618, wrongColor);
   animation->setEasingCurve(QEasingCurve::OutInQuad);

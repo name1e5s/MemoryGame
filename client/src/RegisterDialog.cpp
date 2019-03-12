@@ -1,5 +1,6 @@
-#include "RegisterDialog.h"
 #include <QPropertyAnimation>
+
+#include "RegisterDialog.h"
 #include "RegisterDialog_ui.h"
 
 RegisterDialog::RegisterDialog(QWidget* parent)
