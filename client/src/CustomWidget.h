@@ -8,8 +8,9 @@ class CustomWidget : public QWidget {
   Q_PROPERTY(
       QColor backgroundColor READ getBackgroundColor WRITE setBackgroundColor)
  public:
-  CustomWidget(QWidget* parent = 0)
-      : QWidget(parent), backgroundColor(QColor("#000000")) {}
+  CustomWidget(QWidget* parent = 0) : QWidget(parent) {
+    setBackgroundColor(defaultColor);
+  }
   ~CustomWidget() {}
   QColor getBackgroundColor() const { return backgroundColor; }
   void setBackgroundColor(QColor value) {
@@ -19,8 +20,15 @@ class CustomWidget : public QWidget {
     setAutoFillBackground(true);
     setPalette(pal);
   }
+ public slots:
+  void rightColorAnimation(void);
+  void wrongColorAnimation(void);
 
  private:
   QColor backgroundColor;
+  const QColor defaultColor = QColor("#eeeeee");
+  const QColor rightColor = QColor("#009688");
+  const QColor wrongColor = QColor("#f44336");
+  const int animationTime = 618;
 };
 #endif  // CUSTOMWIDGET_H

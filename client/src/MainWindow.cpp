@@ -1,6 +1,7 @@
 #include "MainWindow.h"
 #include <QDesktopWidget>
 #include <QLayout>
+#include <QPropertyAnimation>
 #include <QStyle>
 #include "CustomWidget.h"
 #include "ui_MainWindow.h"
@@ -12,11 +13,14 @@ MainWindow::MainWindow(QWidget* parent)
   customWidget->setObjectName(QString::fromUtf8("customWidget"));
   customWidget->setGeometry(QRect(0, 80, 1080, 640));
   customWidget->setAutoFillBackground(true);
-  customWidget->setBackgroundColor(QColor("#00FF00"));
   setFixedSize(this->width(), this->height());
   setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
                                   this->size(),
                                   qApp->desktop()->availableGeometry()));
+  connect(ui->startNewGameButton, &QPushButton::clicked, customWidget,
+          &CustomWidget::rightColorAnimation);
+  connect(ui->pauseGameButton, &QPushButton::clicked, customWidget,
+          &CustomWidget::wrongColorAnimation);
 }
 
 MainWindow::~MainWindow() {

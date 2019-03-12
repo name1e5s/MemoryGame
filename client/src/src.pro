@@ -11,7 +11,8 @@ SOURCES += \
         main.cpp \
     MainWindow.cpp \
     Login.cpp \
-    RegisterDialog.cpp
+    RegisterDialog.cpp \
+    CustomWidget.cpp
 
 HEADERS += \
     MainWindow.h \
