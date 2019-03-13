@@ -28,4 +28,5 @@ FORMS += \
     MainWindow.ui
 
 RESOURCES += \
-    assets.qrc
+    assets.qrc \
+    ../3rdparty/qt-material-widgets/components/resources.qrc # I hate QMAKE

@@ -2,14 +2,15 @@
 #define UI_REGISTERDIALOG_H
 
 #include <qtmaterialflatbutton.h>
+#include <qtmaterialradiobutton.h>
 #include <qtmaterialraisedbutton.h>
 #include <qtmaterialtextfield.h>
+#include <QLayout>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QLabel>
-
 QT_BEGIN_NAMESPACE
 
 class Ui_RegisterDialog {
@@ -18,8 +19,10 @@ class Ui_RegisterDialog {
   QtMaterialTextField* userName;
   QtMaterialTextField* passWord;
   QtMaterialTextField* realName;
-  QFrame* frame;
+  QWidget* widget;
   QtMaterialRaisedButton* pushButton;
+  QtMaterialRadioButton* radioButtonGamer;
+  QtMaterialRadioButton* radioButtonAdmin;
 
   void setupUi(QDialog* RegisterDialog) {
     RegisterDialog->resize(640, 480);
@@ -42,10 +45,29 @@ class Ui_RegisterDialog {
     realName->setGeometry(QRect(370, 186, 231, 48));
     realName->setLabel("Real Name");
 
-    frame = new QFrame(RegisterDialog);
-    frame->setGeometry(QRect(370, 230, 240, 111));
-    frame->setFrameShape(QFrame::StyledPanel);
-    frame->setFrameShadow(QFrame::Raised);
+    widget = new QWidget(RegisterDialog);
+    // widget->setGeometry(QRect(370, 240, 240, 90));
+    widget->move(370, 240);
+    QVBoxLayout* buttonLayout = new QVBoxLayout;
+    widget->setLayout(buttonLayout);
+
+    radioButtonGamer = new QtMaterialRadioButton();
+    radioButtonAdmin = new QtMaterialRadioButton();
+    QWidget* container = new QWidget;
+    QVBoxLayout* layout = new QVBoxLayout;
+    container->setLayout(layout);
+    layout->addWidget(radioButtonGamer);
+    layout->addWidget(radioButtonAdmin);
+    radioButtonAdmin->setText("Admin");
+    radioButtonGamer->setText("Gamer");
+    buttonLayout->addWidget(container);
+
+    QSizePolicy policy;
+    policy.setHorizontalPolicy(QSizePolicy::Maximum);
+    container->setSizePolicy(policy);
+    buttonLayout->setAlignment(Qt::AlignCenter);
+    buttonLayout->setMargin(0);
+    buttonLayout->setSpacing(0);
 
     pushButton = new QtMaterialRaisedButton(RegisterDialog);
     pushButton->setGeometry(QRect(370, 360, 240, 36));
