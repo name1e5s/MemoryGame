@@ -29,4 +29,4 @@ FORMS += \
 
 RESOURCES += \
     assets.qrc \
-    ../3rdparty/qt-material-widgets/components/resources.qrc # I hate QMAKE
+    ../../3rd_party/qt-material-widgets/components/resources.qrc # I hate QMAKE
