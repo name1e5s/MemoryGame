@@ -1,3 +1,6 @@
 [submodule "3rd_party/qt-material-widgets"]
 	path = 3rd_party/qt-material-widgets
 	url = git@github.com:name1e5s/qt-material-widgets.git
+[submodule "3rd_party/sqlite_modern_cpp"]
+	path = 3rd_party/sqlite_modern_cpp
+	url = git@github.com:SqliteModernCpp/sqlite_modern_cpp.git
