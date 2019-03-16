@@ -25,9 +25,9 @@ public:
   WordInfo(string word, int difficulty) : word(word), difficulty(difficulty) {}
 
   json toJson() { return json{{"word", word}, {"difficulty", difficulty}}; }
-  string WordInfo::getWord() const { return word; }
+  string getWord() const { return word; }
 
-  int WordInfo::getDifficulty() const { return difficulty; }
+  int getDifficulty() const { return difficulty; }
 
 private:
   string word;
@@ -69,7 +69,7 @@ class Gamer : public BasePerson {
                 {"exp", exp}};
   }
 
-private:
+protected:
   uint32_t levelPassed;
   uint32_t level;
   uint32_t exp;
@@ -92,7 +92,7 @@ public:
                 {"count", questionCount}};
   }
 
-private:
+protected:
   uint32_t level;
   uint32_t questionCount;
 };

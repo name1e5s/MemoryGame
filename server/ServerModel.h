@@ -15,7 +15,7 @@ public:
   void setWordInfo(Basic::WordInfo &&word);
 
 private:
-  Basic::WordInfo word;
+  Basic::WordInfo word = Basic::WordInfo("",1);
 };
 
 class AdminServerModel : public Basic::Admin {
