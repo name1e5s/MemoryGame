@@ -8,10 +8,15 @@ INCLUDEPATH += ../3rd_party/json \
 
 SOURCES += \
         main.cpp \
-    BasicInfo.cpp
+    BasicInfo.cpp \
+    Server.cpp \
+    ServerModel.cpp
 
 HEADERS += \
-    BasicInfo.h
+    BasicInfo.h \
+    Socket.h \
+    Server.h \
+    ServerModel.h
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += sqlite3

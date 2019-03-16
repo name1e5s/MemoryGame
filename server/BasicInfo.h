@@ -4,7 +4,7 @@
 #include <json.hpp>
 #include <string>
 
-namespace GameInfo {
+namespace Basic {
 using nlohmann::json;
 using std::string;
 using uid_t = string;  // User id.
@@ -13,6 +13,25 @@ using pass_t = string; // md5 password
 struct LoginInfo {
   uid_t uid;
   pass_t pass;
+};
+
+struct WordInfo {
+public:
+  WordInfo(const json &j) {
+    word = j.at("word").get<string>();
+    difficulty = j.at("difficulty").get<int>();
+  }
+
+  WordInfo(string word, int difficulty) : word(word), difficulty(difficulty) {}
+
+  json toJson() { return json{{"word", word}, {"difficulty", difficulty}}; }
+  string WordInfo::getWord() const { return word; }
+
+  int WordInfo::getDifficulty() const { return difficulty; }
+
+private:
+  string word;
+  int difficulty;
 };
 
 class BasePerson {
@@ -77,5 +96,5 @@ private:
   uint32_t level;
   uint32_t questionCount;
 };
-} // namespace GameInfo
+} // namespace Basic
 #endif // BASICINFO_H
