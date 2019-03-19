@@ -2,6 +2,9 @@
 #define DIALOG_H
 
 #include <QDialog>
+#include <QMetaObject>
+#include <QObject>
+#include <QVariant>
 #include "RegisterDialog.h"
 
 namespace Ui {
@@ -17,6 +20,9 @@ class LoginDialog : public QDialog {
 
  public slots:
   void checkPassword();
+
+ signals:
+  void sendGamer(QVariant data);
 
  private:
   Ui::LoginDialog* ui;

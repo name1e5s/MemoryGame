@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QDesktopWidget>
 #include <QLayout>
 #include <QPropertyAnimation>
@@ -46,4 +47,10 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow() {
   delete ui;
+}
+
+void MainWindow::updateUI() {
+  ui->UserID->setText(QString::fromStdString(gamer.uid));
+  ui->levelNumber->display(gamer.level);
+  qDebug() << "Out" << QString::fromStdString(gamer.uid);
 }

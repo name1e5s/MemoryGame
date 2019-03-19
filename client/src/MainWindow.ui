@@ -114,6 +114,9 @@
      <property name="text">
       <string>TextLabel</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
     <widget class="QProgressBar" name="updateProgress">
      <property name="geometry">

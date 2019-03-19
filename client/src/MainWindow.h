@@ -1,7 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDebug>
 #include <QMainWindow>
+#include "BasicInfo.h"
 #include "CustomWidget.h"
 #include "QGameTextField.h"
 
@@ -16,10 +18,18 @@ class MainWindow : public QMainWindow {
   explicit MainWindow(QWidget* parent = 0);
   ~MainWindow();
 
+ public slots:
+  void setGamer(QVariant data) {
+    gamer = data.value<Gamer>();
+    updateUI();
+  }
+  void updateUI();
+
  private:
   Ui::MainWindow* ui;
   CustomWidget* customWidget;
   QGameTextField* gameTextField;
+  Gamer gamer;
 };
 
 #endif  // MAINWINDOW_H

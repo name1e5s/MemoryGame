@@ -1,7 +1,9 @@
 #include <QMessageBox>
+#include <QVariant>
 
 #include "Login.h"
 #include "Login_ui.h"
+#include "login.h"
 
 LoginDialog::LoginDialog(QWidget* parent)
     : QDialog(parent), ui(new Ui::LoginDialog), reg(new RegisterDialog) {
@@ -19,7 +21,12 @@ LoginDialog::~LoginDialog() {
 }
 
 void LoginDialog::checkPassword() {
-  if (ui->userName->text() == "test" && ui->passWord->text() == "test") {
+  auto fuck = Login::Instance().getGamer(ui->userName->text().toStdString(),
+                                         ui->passWord->text().toStdString());
+  if (fuck.first == Login::S_NOERROR) {
+    QVariant data;
+    data.setValue(fuck.second);
+    emit sendGamer(data);
     accept();
   } else {
     QMessageBox* msg = new QMessageBox;
