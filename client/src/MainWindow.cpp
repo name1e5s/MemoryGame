@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget* parent)
   gameTextField->setFont(QFont("Roboto", 72, QFont::Medium));
 
   gameTextField->setAnswer(QString("114514"));
+  gameTextField->setDifficulty(1);
 
   gameTextField->setFocus(Qt::OtherFocusReason);
 
@@ -34,6 +35,8 @@ MainWindow::MainWindow(QWidget* parent)
           &CustomWidget::wrongColorAnimation);
   connect(ui->pauseGameButton, &QPushButton::clicked, gameTextField,
           &QGameTextField::showAnswer);
+  connect(ui->startNewGameButton, &QPushButton::clicked, gameTextField,
+          &QGameTextField::gameOver);
 
   setFixedSize(this->width(), this->height());
   setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,

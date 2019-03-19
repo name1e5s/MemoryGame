@@ -23,6 +23,24 @@ void QGameTextField::checkAnswer() {
 
 void QGameTextField::showAnswer() {
   setEnabled(false);
+  showAnswerAnimation();
+  QTimer::singleShot(618 * (4 - difficulty), this, SLOT(hideAnswerAnimation()));
+}
+
+void QGameTextField::gameOver() {
+  setEnabled(false);
+  setText("Game Over :)");
+  setAlpha(0);
+  QPropertyAnimation* animation = new QPropertyAnimation(this, "alpha");
+  animation->setStartValue(0);
+  animation->setEndValue(255);
+  animation->setDuration(157);
+  animation->setEasingCurve(QEasingCurve::OutSine);
+
+  animation->start();
+}
+
+void QGameTextField::showAnswerAnimation() {
   setAlpha(0);
   QPropertyAnimation* animation = new QPropertyAnimation(this, "alpha");
   animation->setStartValue(0);
@@ -32,7 +50,6 @@ void QGameTextField::showAnswer() {
   animation->setEasingCurve(QEasingCurve::OutSine);
 
   animation->start();
-  QTimer::singleShot(618, this, SLOT(hideAnswerAnimation()));
 }
 
 void QGameTextField::hideAnswerAnimation() {

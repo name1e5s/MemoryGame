@@ -19,11 +19,14 @@ class QGameTextField : public QLineEdit {
 
   int getAlpha() const;
   void setAlpha(int value);
+  void setDifficulty(int dif) { difficulty = dif; }
 
  public slots:
+  void gameOver();
   void checkAnswer();
   void showAnswer();
   void hideAnswer();
+  void showAnswerAnimation();
   void hideAnswerAnimation();
 
  signals:
@@ -32,6 +35,7 @@ class QGameTextField : public QLineEdit {
 
  private:
   QString answer;
+  int difficulty;
   int alpha;
 };
 
