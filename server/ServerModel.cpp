@@ -1,22 +1,30 @@
 #include "ServerModel.h"
+#include <word.h>
 using namespace Server;
 
-static void changeLevel(uint32_t exp,uint32_t &level) {
-    while(exp >= (1U << level))
-        level++;
+static void changeLevel(int exp, int &level) {
+  while (exp >= (1U << level))
+    level++;
 }
 
 void GamerServerModel::right(double factor) {
-    exp += ((level +level * (level - 1))) * word.getDifficulty() * factor;
-    changeLevel(exp,level);
-    // TODO: Update Word.
+  gamer.exp += ((gamer.level + gamer.level * (gamer.level - 1))) *
+               word.difficulty * factor;
+  changeLevel(gamer.exp, gamer.level);
+  setWordInfo(Word::Instance().nextWord(gamer.currDifficulty));
 }
 
 void GamerServerModel::wrong(double factor) {
-    exp -= uint32_t((((level +level * (level - 1))) * word.getDifficulty() * (1 - factor))) >> 2;
+  gamer.exp -= uint32_t((((gamer.level + gamer.level * (gamer.level - 1))) *
+                         word.difficulty * (1 - factor))) >>
+               2;
+}
+
+void GamerServerModel::setWordInfo(Basic::WordInfo &&word) {
+  this->word = word;
 }
 
 void AdminServerModel::addedWord() {
-    questionCount ++;
-    changeLevel(questionCount,level);
+  admin.questionCount++;
+  changeLevel(admin.questionCount, admin.level);
 }

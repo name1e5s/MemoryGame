@@ -4,22 +4,26 @@
 #include <BasicInfo.h>
 #include <bits/stdc++.h>
 #include <functional>
+#include <handy/handy.h>
 
-/**
- * Server module of the fucking word game.
- *
- * Request format:
- * `{"req":<request string>, "para":<some parameters>}`
- *
- * Response format:
- * `{"status": <true or false>, "response":<some data>}`
- */
+// Server module of the fucking word game.
+
+//  Request format:
+//  0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
+//  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+//  |                  OPCODE                       |
+//  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+//  |                      ID                       |
+//  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+//  |                REQUEST STRUCT                 |
+//  +--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
+
 using std::string;
 namespace Server {
 
 class Server {
 public:
-    Server() = default;
+  Server() = default;
 
 private:
   std::unordered_map<
