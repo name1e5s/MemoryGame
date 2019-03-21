@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <data/BasicInfo.h>
 #include <QDebug>
 #include <QMainWindow>
-#include <data/BasicInfo.h>
 #include "CustomWidget.h"
 #include "QGameTextField.h"
 

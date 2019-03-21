@@ -4,10 +4,10 @@
 #include <QPropertyAnimation>
 #include <QStyle>
 
+#include <data/Word.h>
 #include <widgets/CustomWidget.h>
 #include <widgets/MainWindow.h>
 #include <widgets/QGameTextField.h>
-#include <data/Word.h>
 
 #include "ui_MainWindow.h"
 
@@ -28,7 +28,8 @@ MainWindow::MainWindow(QWidget* parent)
   gameTextField->setAlignment(Qt::AlignCenter);
   gameTextField->setFont(QFont("Roboto", 72, QFont::Medium));
 
-  gameTextField->setAnswer(QString::fromStdString(Word::Instance().nextWord(1).word));
+  gameTextField->setAnswer(
+      QString::fromStdString(Word::Instance().nextWord(1).word));
   gameTextField->setDifficulty(1);
 
   gameTextField->setFocus(Qt::OtherFocusReason);

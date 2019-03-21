@@ -1,7 +1,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
-#include "BasicInfo.h"
 #include <sqlite_modern_cpp.h>
+#include "BasicInfo.h"
 
 class Login {
  public:

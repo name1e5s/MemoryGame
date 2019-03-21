@@ -1,5 +1,5 @@
-#include <data/login.h>
 #include <data/Word.h>
+#include <data/login.h>
 
 Word* Word::_instance = 0;
 

@@ -1,7 +1,7 @@
 #ifndef WORD_H
 #define WORD_H
-#include "BasicInfo.h"
 #include <sqlite_modern_cpp.h>
+#include "BasicInfo.h"
 
 class Word {
  public:
@@ -44,8 +44,8 @@ class Word {
       insert({"young", 1});
       insert({"simple", 2});
       insert({"naive", 3});
-      insert({"fuck",1});
-      insert({"excited",1});
+      insert({"fuck", 1});
+      insert({"excited", 1});
     }
   }
 
