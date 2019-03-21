@@ -1,7 +1,8 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 
-#include "QGameTextField.h"
+#include <data/Word.h>
+#include <widgets/QGameTextField.h>
 
 QString QGameTextField::getAnswer() const {
   return answer;
@@ -17,6 +18,7 @@ void QGameTextField::checkAnswer() {
     emit wrong();
   } else {
     emit right();
+    setAnswer(QString::fromStdString(Word::Instance().nextWord(1).word));
   }
   setText("");
 }

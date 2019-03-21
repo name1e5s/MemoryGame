@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QWidget>
-#include "Login.h"
-#include "MainWindow.h"
+#include <widgets/MainWindow.h>
+#include <widgets/Login.h>
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);

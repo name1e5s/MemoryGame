@@ -5,30 +5,31 @@ CONFIG += c++14
 TARGET = client
 
 LIBS += $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
-INCLUDEPATH += $$top_srcdir/components/
+INCLUDEPATH += $$top_srcdir/components/ \
+               include/
 INCLUDEPATH += ../../3rd_party/sqlite_modern_cpp/hdr
 PRE_TARGETDEPS = $$top_builddir/components/$(OBJECTS_DIR)/libcomponents.a
 SOURCES += \
-        main.cpp \
+    main.cpp \
     MainWindow.cpp \
     Login.cpp \
     RegisterDialog.cpp \
     CustomWidget.cpp \
     QGameTextField.cpp \
-    BasicInfo.cpp \
-    DataBase.cpp
+    DB.cpp \
+    BasicInfo.cpp
 
 HEADERS += \
-    MainWindow.h \
-    Login.h \
-    Login_ui.h \
-    RegisterDialog.h \
-    RegisterDialog_ui.h \
-    CustomWidget.h \
-    QGameTextField.h \
-    login.h \
-    word.h \
-    BasicInfo.h
+    include/data/BasicInfo.h \
+    include/data/login.h \
+    include/data/Word.h \
+    include/ui/Login.h \
+    include/ui/RegisterDialog.h \
+    include/widgets/CustomWidget.h \
+    include/widgets/Login.h \
+    include/widgets/MainWindow.h \
+    include/widgets/QGameTextField.h \
+    include/widgets/RegisterDialog.h
 
 FORMS += \
     MainWindow.ui

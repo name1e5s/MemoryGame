@@ -4,8 +4,11 @@
 #include <QPropertyAnimation>
 #include <QStyle>
 
-#include "CustomWidget.h"
-#include "MainWindow.h"
+#include <widgets/CustomWidget.h>
+#include <widgets/MainWindow.h>
+#include <widgets/QGameTextField.h>
+#include <data/Word.h>
+
 #include "ui_MainWindow.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -25,7 +28,7 @@ MainWindow::MainWindow(QWidget* parent)
   gameTextField->setAlignment(Qt::AlignCenter);
   gameTextField->setFont(QFont("Roboto", 72, QFont::Medium));
 
-  gameTextField->setAnswer(QString("114514"));
+  gameTextField->setAnswer(QString::fromStdString(Word::Instance().nextWord(1).word));
   gameTextField->setDifficulty(1);
 
   gameTextField->setFocus(Qt::OtherFocusReason);
@@ -34,9 +37,9 @@ MainWindow::MainWindow(QWidget* parent)
           &CustomWidget::rightColorAnimation);
   connect(gameTextField, &QGameTextField::wrong, customWidget,
           &CustomWidget::wrongColorAnimation);
-  connect(ui->pauseGameButton, &QPushButton::clicked, gameTextField,
+  connect(ui->showAnswer, &QPushButton::clicked, gameTextField,
           &QGameTextField::showAnswer);
-  connect(ui->startNewGameButton, &QPushButton::clicked, gameTextField,
+  connect(ui->gameOver, &QPushButton::clicked, gameTextField,
           &QGameTextField::gameOver);
 
   setFixedSize(this->width(), this->height());
@@ -50,7 +53,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::updateUI() {
-  ui->UserID->setText(QString::fromStdString(gamer.uid));
-  ui->levelNumber->display(gamer.level);
+  ui->userName->setText("User Name: " + QString::fromStdString(gamer.uid));
+  ui->userLevel->setText(QString("User Level: %1").arg(gamer.level));
   qDebug() << "Out" << QString::fromStdString(gamer.uid);
 }

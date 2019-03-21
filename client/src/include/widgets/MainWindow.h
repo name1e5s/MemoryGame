@@ -3,7 +3,7 @@
 
 #include <QDebug>
 #include <QMainWindow>
-#include "BasicInfo.h"
+#include <data/BasicInfo.h>
 #include "CustomWidget.h"
 #include "QGameTextField.h"
 

@@ -1,9 +1,9 @@
 #include <QMessageBox>
 #include <QVariant>
 
-#include "Login.h"
-#include "Login_ui.h"
-#include "login.h"
+#include <data/login.h>
+#include <ui/Login.h>
+#include <widgets/Login.h>
 
 LoginDialog::LoginDialog(QWidget* parent)
     : QDialog(parent), ui(new Ui::LoginDialog), reg(new RegisterDialog) {

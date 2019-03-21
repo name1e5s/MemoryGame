@@ -1,6 +1,6 @@
 #include <QPropertyAnimation>
 
-#include "CustomWidget.h"
+#include "widgets/CustomWidget.h"
 
 void CustomWidget::rightColorAnimation(void) {
   QPropertyAnimation* animation =
