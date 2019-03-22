@@ -148,7 +148,7 @@
        <item>
         <widget class="QLabel" name="userExp">
          <property name="text">
-          <string>TextLabel</string>
+          <string>Exp: </string>
          </property>
         </widget>
        </item>

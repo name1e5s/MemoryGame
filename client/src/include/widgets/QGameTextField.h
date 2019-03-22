@@ -1,5 +1,6 @@
 #ifndef QGAMETEXTFIELD_H
 #define QGAMETEXTFIELD_H
+#include <data/Word.h>
 #include <qtmaterialtextfield.h>
 
 class QGameTextField : public QLineEdit {
@@ -19,7 +20,14 @@ class QGameTextField : public QLineEdit {
 
   int getAlpha() const;
   void setAlpha(int value);
-  void setDifficulty(int dif) { difficulty = dif; }
+  void setDifficulty(int dif) {
+    difficulty = dif;
+    newWord();
+  }
+  void newWord() {
+    setAnswer(
+        QString::fromStdString(Word::Instance().nextWord(difficulty).word));
+  }
 
  public slots:
   void gameOver();

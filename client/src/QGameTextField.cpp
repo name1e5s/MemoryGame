@@ -18,7 +18,7 @@ void QGameTextField::checkAnswer() {
     emit wrong();
   } else {
     emit right();
-    setAnswer(QString::fromStdString(Word::Instance().nextWord(1).word));
+    newWord();
   }
   setText("");
 }
