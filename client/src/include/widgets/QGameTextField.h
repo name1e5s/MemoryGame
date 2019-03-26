@@ -10,6 +10,7 @@ class QGameTextField : public QLineEdit {
 
  public:
   QGameTextField(QWidget* parent = 0) : QLineEdit(parent) {
+    this->setEnabled(false);
     connect(this, &QGameTextField::returnPressed, this,
             &QGameTextField::checkAnswer);
   }
@@ -32,7 +33,7 @@ class QGameTextField : public QLineEdit {
  public slots:
   void gameOver();
   void checkAnswer();
-  void showAnswer();
+  void gameStart();
   void hideAnswer();
   void showAnswerAnimation();
   void hideAnswerAnimation();

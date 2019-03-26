@@ -18,12 +18,13 @@ void QGameTextField::checkAnswer() {
     emit wrong();
   } else {
     emit right();
+    setEnabled(false);
     newWord();
   }
   setText("");
 }
 
-void QGameTextField::showAnswer() {
+void QGameTextField::gameStart() {
   setEnabled(false);
   showAnswerAnimation();
   QTimer::singleShot(618 * (4 - difficulty), this, SLOT(hideAnswerAnimation()));

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>GameWindow</class>
+ <widget class="QMainWindow" name="GameWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -155,7 +155,7 @@
       </layout>
      </widget>
     </widget>
-    <widget class="QPushButton" name="showAnswer">
+    <widget class="QPushButton" name="gameStart">
      <property name="geometry">
       <rect>
        <x>650</x>
@@ -165,7 +165,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Show Answer</string>
+      <string>New Game</string>
      </property>
     </widget>
     <widget class="QPushButton" name="gameOver">
@@ -178,7 +178,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Game Over</string>
+      <string>End Game</string>
      </property>
     </widget>
    </widget>

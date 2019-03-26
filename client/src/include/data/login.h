@@ -47,7 +47,7 @@ class Login {
           g.level = level;
           g.exp = exp;
           g.levelPassed = levelPassed;
-          g.currDifficulty = 0;
+          g.currDifficulty = 1;
           g.realName = real_name;
         };
     return std::make_pair(test, g);

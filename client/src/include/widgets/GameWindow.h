@@ -8,15 +8,15 @@
 #include "QGameTextField.h"
 
 namespace Ui {
-class MainWindow;
+class GameWindow;
 }
 
-class MainWindow : public QMainWindow {
+class GameWindow : public QMainWindow {
   Q_OBJECT
 
  public:
-  explicit MainWindow(QWidget* parent = 0);
-  ~MainWindow();
+  explicit GameWindow(QWidget* parent = 0);
+  ~GameWindow();
 
  signals:
   void gamerChanged();
@@ -29,10 +29,11 @@ class MainWindow : public QMainWindow {
   void updateUI();
   void onRightAnswer();
   void onWrongAnswer();
+  void onGameOver();
   void setDifficulty(int difficulty);
 
  private:
-  Ui::MainWindow* ui;
+  Ui::GameWindow* ui;
   CustomWidget* customWidget;
   QGameTextField* gameTextField;
   Gamer gamer;
