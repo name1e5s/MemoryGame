@@ -10,6 +10,7 @@ Word& Word::Instance() {
 }
 
 void Word::destroy() {
+  db.close();
   delete _instance;
 }
 

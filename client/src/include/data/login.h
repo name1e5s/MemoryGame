@@ -8,7 +8,7 @@
 class Login {
  public:
   static Login& Instance();
-  static void destroy();
+  void destroy();
 
   void insert(QString uid, QString pass, int isGamer, QString realName) {
     QSqlQuery qry;
@@ -51,7 +51,7 @@ class Login {
         "WHERE uid='%1' and password='%2' LIMIT 1;";
     QSqlQuery qry;
     qry.prepare(str.arg(uid).arg(pass));
-    if (!qry.exec()) {
+    if (qry.exec()) {
       if (qry.next() && qry.value(5).toInt() == 1) {
         g.uid = qry.value(0).toString().toStdString();
         g.realName = qry.value(2).toString().toStdString();

@@ -1,45 +1,76 @@
 #ifndef WORD_H
 #define WORD_H
-#include <sqlite_modern_cpp.h>
+#include <QtSql>
 #include "BasicInfo.h"
 
 class Word {
  public:
   static Word& Instance();
-  static void destroy();
+  void destroy();
 
   void insert(const WordInfo& info, std::string author) {
-    db << "INSERT INTO word (word, difficulty, author) values (?,?,?);"
-       << info.word << info.difficulty << author;
+    QString str = QString(
+                      "INSERT INTO word (word, difficulty, author) values "
+                      "('%1',%2,'%3');")
+                      .arg(QString::fromStdString(info.word))
+                      .arg(info.difficulty)
+                      .arg(QString::fromStdString(author));
+    QSqlQuery qry;
+    qry.prepare(str);
+    qry.exec();
   }
 
   void insert(const WordInfo& info) {
-    db << "INSERT INTO word (word, difficulty) values (?,?);" << info.word
-       << info.difficulty;
+    QString str =
+        QString("INSERT INTO word (word, difficulty) values ('%1',%2);")
+            .arg(QString::fromStdString(info.word))
+            .arg(info.difficulty);
+    QSqlQuery qry;
+    qry.prepare(str);
+    qry.exec();
   }
 
   WordInfo nextWord(int difficulty) {
     WordInfo word;
-    db << "SELECT word,difficulty FROM word WHERE difficulty=? ORDER BY "
-          "RANDOM() LIMIT 1;"
-       << difficulty >>
-        [&](std::string w, int difficulty) {
-          word.difficulty = difficulty;
-          word.word = w;
-        };
-    return word;
+    QString str =
+        QString(
+            "SELECT word,difficulty FROM word WHERE difficulty=%1 ORDER BY "
+            "RANDOM() LIMIT 1;")
+            .arg(difficulty);
+    QSqlQuery qry;
+    qry.prepare(str);
+    if (qry.exec()) {
+      if (qry.next()) {
+        word.word = qry.value(0).toString().toStdString();
+        word.difficulty = qry.value(1).toInt();
+        return word;
+      }
+    }
+    throw std::runtime_error("No Such Word!");
   }
 
  private:
-  Word(const std::string path = "word.db") : db(path) {
-    db << "CREATE TABLE IF NOT EXISTS word ("
-          "  _id integer primary key autoincrement not null,"
-          "  word TEXT NOT NULL,"
-          "  difficulty INT NOT NULL,"
-          "  author TEXT"
-          ");";
+  Word(const char* path = "./word.db") {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path);
+    if (!db.open()) {
+      qDebug() << db.lastError();
+    }
+    QSqlQuery qry;
+    qry.prepare(
+        "CREATE TABLE IF NOT EXISTS word ("
+        "  _id integer primary key autoincrement not null,"
+        "  word TEXT NOT NULL,"
+        "  difficulty INT NOT NULL,"
+        "  author TEXT"
+        ");");
+    qry.exec();
     int count = 0;
-    db << "SELECT COUNT(*) FROM word" >> count;
+    qry.prepare("SELECT COUNT(*) FROM word");
+    qry.exec();
+    if (qry.next()) {
+      count = qry.value(0).toInt();
+    }
     if (count == 0) {
       insert({"young", 1});
       insert({"simple", 2});
@@ -49,7 +80,7 @@ class Word {
     }
   }
 
-  sqlite::database db;
+  QSqlDatabase db;
   static Word* _instance;
 };
 #endif  // WORD_H
