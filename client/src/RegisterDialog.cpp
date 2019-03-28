@@ -20,9 +20,8 @@ RegisterDialog::~RegisterDialog() {
 void RegisterDialog::reg() {
   bool flag = ui->radioButtonGamer->isChecked();
   try {
-    Login::Instance().insert(ui->userName->text().toStdString(),
-                             ui->passWord->text().toStdString(), flag ? 1 : 0,
-                             ui->realName->text().toStdString());
+    Login::Instance().insert(ui->userName->text(), ui->passWord->text(),
+                             flag ? 1 : 0, ui->realName->text());
     accept();
   } catch (std::exception& e) {
     QMessageBox* msg = new QMessageBox;

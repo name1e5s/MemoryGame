@@ -1,112 +1,119 @@
 #ifndef LOGIN_H
 #define LOGIN_H
-#include <sqlite_modern_cpp.h>
+#include <QString>
+#include <QtSql>
+#include <stdexcept>
 #include "BasicInfo.h"
 
 class Login {
  public:
-  typedef enum {
-    S_NOERROR,
-    S_NXUSER,
-    S_WRONGPASS,
-    S_USEREXISTS,
-    S_TYPERR,
-    S_UNKNOWN
-  } status;
   static Login& Instance();
   static void destroy();
 
-  void insert(std::string uid,
-              std::string pass,
-              int isGamer,
-              std::string realName = "U") {
-    db << "INSERT INTO user "
-          "(uid,password,real_name,level,exp,gamer,level_passed) VALUES "
-          "(?,?,?,?,?,?,?);"
-       << uid << pass << realName << 0 << 0 << isGamer << 0;
+  void insert(QString uid, QString pass, int isGamer, QString realName) {
+    QSqlQuery qry;
+    QString str =
+        "INSERT INTO user "
+        "(uid,password,real_name,level,exp,gamer,level_passed) VALUES "
+        "('%1','%2','%3',%4,%5,%6,%7);";
+    qry.prepare(
+        str.arg(uid).arg(pass).arg(realName).arg(0).arg(0).arg(isGamer).arg(0));
+    if (!qry.exec()) {
+      throw qry.lastError();
+    }
   }
 
-  std::pair<status, Gamer> getGamer(std::string uid, std::string pass) {
+  Gamer getGamer(QString uid, QString pass) {
     Gamer g;
-    status test = S_NOERROR;
-    int count = 0;
-    db << "SELECT COUNT(*) FROM user where uid=?" << uid >> count;
-    if (count != 1) {
-      return std::make_pair(S_NXUSER, g);
+    QString str =
+        "SELECT uid,password,real_name,level,exp,gamer,level_passed FROM user "
+        "WHERE uid='%1' AND password='%2' LIMIT 1;";
+    QSqlQuery qry;
+    qry.prepare(str.arg(uid).arg(pass));
+    if (qry.exec()) {
+      if (qry.next() && qry.value(5).toInt() == 1) {
+        g.uid = qry.value(0).toString().toStdString();
+        g.realName = qry.value(2).toString().toStdString();
+        g.level = qry.value(3).toInt();
+        g.exp = qry.value(4).toInt();
+        g.levelPassed = qry.value(6).toInt();
+        g.currDifficulty = 1;
+        return g;
+      }
     }
-    db << "SELECT uid,password,real_name,level,exp,gamer,level_passed FROM "
-          "user WHERE uid=? LIMIT 1;"
-       << uid >>
-        [&](std::string uid, std::string password, std::string real_name,
-            int level, int exp, int gamer, int levelPassed) {
-          if (password != pass)
-            test = S_WRONGPASS;
-          if (gamer == 0)
-            test = S_TYPERR;
-          g.uid = uid;
-          g.level = level;
-          g.exp = exp;
-          g.levelPassed = levelPassed;
-          g.currDifficulty = 1;
-          g.realName = real_name;
-        };
-    return std::make_pair(test, g);
+    throw std::runtime_error("");
   }
 
-  std::pair<status, Admin> getAdmin(std::string uid, std::string pass) {
+  Admin getAdmin(QString uid, QString pass) {
     Admin g;
-    status test = S_NOERROR;
-    int count = 0;
-    db << "SELECT COUNT(*) FROM user where uid=?" << uid >> count;
-    if (count != 1) {
-      return std::make_pair(S_NXUSER, g);
+    QString str =
+        "SELECT uid,password,real_name,level,exp,gamer,level_passed FROM user "
+        "WHERE uid='%1' and password='%2' LIMIT 1;";
+    QSqlQuery qry;
+    qry.prepare(str.arg(uid).arg(pass));
+    if (!qry.exec()) {
+      if (qry.next() && qry.value(5).toInt() == 1) {
+        g.uid = qry.value(0).toString().toStdString();
+        g.realName = qry.value(2).toString().toStdString();
+        g.level = qry.value(3).toInt();
+        g.questionCount = qry.value(4).toInt();
+        return g;
+      }
     }
-    db << "SELECT uid,password,real_name,level,exp,gamer,level_passed FROM "
-          "user WHERE uid=? LIMIT 1;"
-       << uid >>
-        [&](std::string uid, std::string password, std::string real_name,
-            int level, int exp, int gamer, int levelPassed) {
-          if (password != pass)
-            test = S_WRONGPASS;
-          if (gamer == 1)
-            test = S_TYPERR;
-          g.uid = uid;
-          g.level = level;
-          g.questionCount = levelPassed;
-          g.realName = real_name;
-        };
-    return std::make_pair(test, g);
+    throw std::runtime_error("");
   }
 
   void updateUser(const Gamer& gamer) {
-    db << "UPDATE user SET level=?,exp=?,level_passed=? WHERE uid=?;"
-       << gamer.level << gamer.exp << gamer.levelPassed << gamer.uid;
+    QString str =
+        "UPDATE user SET level=%1,exp=%2,level_passed=%3 WHERE uid='%4';";
+    QSqlQuery qry;
+    qry.prepare(str.arg(gamer.level)
+                    .arg(gamer.exp)
+                    .arg(gamer.levelPassed)
+                    .arg(QString::fromStdString(gamer.uid)));
+    qry.exec();
   }
 
   void updateUser(const Admin& admin) {
-    db << "UPDATE user SET level=?,level_passed=? WHERE uid=?;" << admin.level
-       << admin.questionCount << admin.uid;
+    QString str = "UPDATE user SET level=%1,level_passed=%2 WHERE uid='%3';";
+    QSqlQuery qry;
+    qry.prepare(str.arg(admin.level)
+                    .arg(admin.questionCount)
+                    .arg(QString::fromStdString(admin.uid)));
+    qry.exec();
   }
 
  private:
-  Login(const char* path = "user.db") : db(path) {
-    db << "CREATE TABLE IF NOT EXISTS user ("
-          "  uid TEXT primary key not null,"
-          "  password TEXT not null,"
-          "  real_name TEXT NOT NULL,"
-          "  level INT NOT NULL,"
-          "  exp INT NOT NULL,"
-          "  gamer INT NOT NULL,"
-          "  level_passed INT NOT NULL"
-          ");";
+  Login(const char* path = "./user.db") {
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName(path);
+    if (!db.open()) {
+      qDebug() << db.lastError();
+    }
+    QSqlQuery qry;
+    qry.prepare(
+        "CREATE TABLE IF NOT EXISTS user ("
+        "  uid TEXT primary key not null,"
+        "  password TEXT not null,"
+        "  real_name TEXT NOT NULL,"
+        "  level INT NOT NULL,"
+        "  exp INT NOT NULL,"
+        "  gamer INT NOT NULL,"
+        "  level_passed INT NOT NULL"
+        ");");
+    qry.exec();
     int count = 0;
-    db << "SELECT COUNT(*) FROM user" >> count;
+    qry.prepare("SELECT COUNT(*) FROM user");
+    qry.exec();
+    if (qry.next()) {
+      count = qry.value(0).toInt();
+    }
     if (count == 0) {
-      insert("user", "test", 1);
-      insert("admin", "test", 0);
+      insert("user", "test", 1, "user");
+      insert("admin", "test", 0, "admin");
     }
   }
-  sqlite::database db;
+  QSqlDatabase db;
   static Login* _instance;
 };
 #endif  // LOGIN_H

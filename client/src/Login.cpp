@@ -21,14 +21,14 @@ LoginDialog::~LoginDialog() {
 }
 
 void LoginDialog::checkPassword() {
-  auto fuck = Login::Instance().getGamer(ui->userName->text().toStdString(),
-                                         ui->passWord->text().toStdString());
-  if (fuck.first == Login::S_NOERROR) {
+  try {
+    auto fuck =
+        Login::Instance().getGamer(ui->userName->text(), ui->passWord->text());
     QVariant data;
-    data.setValue(fuck.second);
+    data.setValue(fuck);
     emit sendGamer(data);
     accept();
-  } else {
+  } catch (...) {
     QMessageBox* msg = new QMessageBox;
     msg->setText("Login Failed.");
     msg->setWindowModality(Qt::NonModal);

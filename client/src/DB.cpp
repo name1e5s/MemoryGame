@@ -22,5 +22,6 @@ Login& Login::Instance() {
 }
 
 void Login::destroy() {
+  db.close();
   delete _instance;
 }
