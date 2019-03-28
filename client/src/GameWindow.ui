@@ -181,6 +181,19 @@
       <string>End Game</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="gamers">
+     <property name="geometry">
+      <rect>
+       <x>890</x>
+       <y>20</y>
+       <width>94</width>
+       <height>36</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Gamers</string>
+     </property>
+    </widget>
    </widget>
    <widget class="Line" name="line">
     <property name="geometry">

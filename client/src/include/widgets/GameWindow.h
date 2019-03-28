@@ -30,6 +30,7 @@ class GameWindow : public QMainWindow {
   void onRightAnswer();
   void onWrongAnswer();
   void onGameOver();
+  void gamerTable();
   void setDifficulty(int difficulty);
 
  private:

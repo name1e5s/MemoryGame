@@ -17,7 +17,8 @@ SOURCES += \
     QGameTextField.cpp \
     DB.cpp \
     BasicInfo.cpp \
-    GameWindow.cpp
+    GameWindow.cpp \
+    Gamers.cpp
 
 HEADERS += \
     include/data/BasicInfo.h \
@@ -29,10 +30,12 @@ HEADERS += \
     include/widgets/Login.h \
     include/widgets/QGameTextField.h \
     include/widgets/RegisterDialog.h \
-    include/widgets/GameWindow.h
+    include/widgets/GameWindow.h \
+    Gamers.h
 
 FORMS += \
-    GameWindow.ui
+    GameWindow.ui \
+    Gamers.ui
 
 RESOURCES += \
     assets.qrc \

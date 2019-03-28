@@ -9,7 +9,7 @@ Word& Word::Instance() {
   return *_instance;
 }
 
-void Word::destroy() {
+Word::~Word() {
   db.close();
   delete _instance;
 }
@@ -22,7 +22,7 @@ Login& Login::Instance() {
   return *_instance;
 }
 
-void Login::destroy() {
+Login::~Login() {
   db.close();
   delete _instance;
 }

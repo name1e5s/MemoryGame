@@ -6,7 +6,7 @@
 class Word {
  public:
   static Word& Instance();
-  void destroy();
+  ~Word();
 
   void insert(const WordInfo& info, std::string author) {
     QString str = QString(
@@ -33,12 +33,10 @@ class Word {
   WordInfo nextWord(int difficulty) {
     WordInfo word;
     QString str =
-        QString(
-            "SELECT word,difficulty FROM word WHERE difficulty=%1 ORDER BY "
-            "RANDOM() LIMIT 1;")
-            .arg(difficulty);
+        "SELECT word,difficulty FROM word WHERE difficulty=%1 ORDER BY "
+        "RANDOM() LIMIT 1;";
     QSqlQuery qry;
-    qry.prepare(str);
+    qry.prepare(str.arg(difficulty));
     if (qry.exec()) {
       if (qry.next()) {
         word.word = qry.value(0).toString().toStdString();
@@ -47,6 +45,10 @@ class Word {
       }
     }
     throw std::runtime_error("No Such Word!");
+  }
+
+  void getAdmins(QSqlQueryModel* model) {
+    model->setQuery("SELECT word,difficulty,author FROM word", db);
   }
 
  private:

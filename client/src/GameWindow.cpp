@@ -10,6 +10,7 @@
 #include <widgets/GameWindow.h>
 #include <widgets/QGameTextField.h>
 
+#include "Gamers.h"
 #include "ui_GameWindow.h"
 
 GameWindow::GameWindow(QWidget* parent)
@@ -52,6 +53,7 @@ GameWindow::GameWindow(QWidget* parent)
   connect(ui->diffi, qOverload<int>(&QSpinBox::valueChanged), this,
           &GameWindow::setDifficulty);
   connect(this, &GameWindow::gamerChanged, this, &GameWindow::updateUI);
+  connect(ui->gamers, &QPushButton::clicked, this, &GameWindow::gamerTable);
 
   setFixedSize(this->width(), this->height());
   setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter,
@@ -99,4 +101,9 @@ void GameWindow::setDifficulty(int difficulty) {
   gamer.currDifficulty = difficulty;
   gameTextField->setDifficulty(difficulty);
   emit gamerChanged();
+}
+
+void GameWindow::gamerTable() {
+  QDialog* gamers = new Gamers(this);
+  gamers->show();
 }

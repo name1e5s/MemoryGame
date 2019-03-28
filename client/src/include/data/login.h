@@ -8,7 +8,7 @@
 class Login {
  public:
   static Login& Instance();
-  void destroy();
+  ~Login();
 
   void insert(QString uid, QString pass, int isGamer, QString realName) {
     QSqlQuery qry;
@@ -41,7 +41,7 @@ class Login {
         return g;
       }
     }
-    throw std::runtime_error("");
+    throw std::runtime_error("No Such User");
   }
 
   Admin getAdmin(QString uid, QString pass) {
@@ -52,7 +52,7 @@ class Login {
     QSqlQuery qry;
     qry.prepare(str.arg(uid).arg(pass));
     if (qry.exec()) {
-      if (qry.next() && qry.value(5).toInt() == 1) {
+      if (qry.next() && qry.value(5).toInt() == 0) {
         g.uid = qry.value(0).toString().toStdString();
         g.realName = qry.value(2).toString().toStdString();
         g.level = qry.value(3).toInt();
@@ -60,7 +60,25 @@ class Login {
         return g;
       }
     }
-    throw std::runtime_error("");
+    throw std::runtime_error("No Such Admin");
+  }
+
+  void getGamers(QSqlQueryModel* model) {
+    model->setQuery("SELECT uid,real_name,level,exp FROM user WHERE gamer=1",
+                    db);
+    model->setHeaderData(0, Qt::Horizontal, "User ID");
+    model->setHeaderData(1, Qt::Horizontal, "Real Name");
+    model->setHeaderData(2, Qt::Horizontal, "Level");
+    model->setHeaderData(3, Qt::Horizontal, "Exp");
+  }
+
+  void getAdmins(QSqlQueryModel* model) {
+    model->setQuery("SELECT uid,real_name,level,exp FROM user WHERE gamer=0",
+                    db);
+    model->setHeaderData(0, Qt::Horizontal, "User ID");
+    model->setHeaderData(1, Qt::Horizontal, "Real Name");
+    model->setHeaderData(2, Qt::Horizontal, "Level");
+    model->setHeaderData(3, Qt::Horizontal, "Problem Count");
   }
 
   void updateUser(const Gamer& gamer) {
