@@ -19,7 +19,7 @@ class Login {
     qry.prepare(
         str.arg(uid).arg(pass).arg(realName).arg(0).arg(0).arg(isGamer).arg(0));
     if (!qry.exec()) {
-      throw qry.lastError();
+      throw std::runtime_error((qry.lastError().databaseText()).toStdString());
     }
   }
 

@@ -53,6 +53,7 @@ GameWindow::GameWindow(QWidget* parent)
   connect(ui->diffi, qOverload<int>(&QSpinBox::valueChanged), this,
           &GameWindow::setDifficulty);
   connect(this, &GameWindow::gamerChanged, this, &GameWindow::updateUI);
+  connect(ui->gamers, &QPushButton::clicked, this, &GameWindow::onGameOver);
   connect(ui->gamers, &QPushButton::clicked, this, &GameWindow::gamerTable);
 
   setFixedSize(this->width(), this->height());
