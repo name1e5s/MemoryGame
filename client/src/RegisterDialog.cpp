@@ -1,6 +1,6 @@
 #include <exception>
 
-#include <data/login.h>
+#include <data/User.h>
 #include <ui/RegisterDialog.h>
 #include <widgets/RegisterDialog.h>
 #include <QMessageBox>

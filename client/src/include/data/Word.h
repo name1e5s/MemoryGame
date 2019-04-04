@@ -1,5 +1,6 @@
 #ifndef WORD_H
 #define WORD_H
+#include <QDebug>
 #include <QtSql>
 #include "BasicInfo.h"
 
@@ -15,7 +16,7 @@ class Word {
                       .arg(QString::fromStdString(info.word))
                       .arg(info.difficulty)
                       .arg(QString::fromStdString(author));
-    QSqlQuery qry;
+    QSqlQuery qry("wordConnection", db);
     qry.prepare(str);
     qry.exec();
   }
@@ -25,7 +26,7 @@ class Word {
         QString("INSERT INTO word (word, difficulty) values ('%1',%2);")
             .arg(QString::fromStdString(info.word))
             .arg(info.difficulty);
-    QSqlQuery qry;
+    QSqlQuery qry("wordConnection", db);
     qry.prepare(str);
     qry.exec();
   }
@@ -35,9 +36,8 @@ class Word {
     QString str =
         "SELECT word,difficulty FROM word WHERE difficulty=%1 ORDER BY "
         "RANDOM() LIMIT 1;";
-    QSqlQuery qry;
-    qry.prepare(str.arg(difficulty));
-    if (qry.exec()) {
+    QSqlQuery qry("wordConnection", db);
+    if (qry.exec(str.arg(difficulty))) {
       if (qry.next()) {
         word.word = qry.value(0).toString().toStdString();
         word.difficulty = qry.value(1).toInt();
@@ -52,13 +52,16 @@ class Word {
   }
 
  private:
-  Word(const char* path = "./word.db") {
-    db = QSqlDatabase::addDatabase("QSQLITE");
+  Word(const char* path = "word.db") {
+    if (QSqlDatabase::contains("wordConnection"))
+      db = QSqlDatabase::database("wordConnection");
+    else
+      db = QSqlDatabase::addDatabase("QSQLITE", "wordConnection");
     db.setDatabaseName(path);
     if (!db.open()) {
-      qDebug() << db.lastError();
+      throw std::runtime_error(db.lastError().databaseText().toStdString());
     }
-    QSqlQuery qry;
+    QSqlQuery qry("wordConnection", db);
     qry.prepare(
         "CREATE TABLE IF NOT EXISTS word ("
         "  _id integer primary key autoincrement not null,"
@@ -77,7 +80,7 @@ class Word {
       insert({"young", 1});
       insert({"simple", 2});
       insert({"naive", 3});
-      insert({"fuck", 1});
+      insert({"6666", 1});
       insert({"excited", 1});
     }
   }

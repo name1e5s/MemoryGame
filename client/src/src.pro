@@ -22,7 +22,6 @@ SOURCES += \
 
 HEADERS += \
     include/data/BasicInfo.h \
-    include/data/login.h \
     include/data/Word.h \
     include/ui/Login.h \
     include/ui/RegisterDialog.h \
@@ -31,7 +30,8 @@ HEADERS += \
     include/widgets/QGameTextField.h \
     include/widgets/RegisterDialog.h \
     include/widgets/GameWindow.h \
-    Gamers.h
+    Gamers.h \
+    include/data/User.h
 
 FORMS += \
     GameWindow.ui \

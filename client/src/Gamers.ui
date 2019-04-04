@@ -19,20 +19,7 @@
   <property name="windowFilePath">
    <string/>
   </property>
-  <widget class="QPushButton" name="okay">
-   <property name="geometry">
-    <rect>
-     <x>430</x>
-     <y>430</y>
-     <width>94</width>
-     <height>36</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>PushButton</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="cancel">
+  <widget class="QPushButton" name="close">
    <property name="geometry">
     <rect>
      <x>540</x>
@@ -42,7 +29,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Close</string>
    </property>
   </widget>
   <widget class="QTableView" name="gamerTableView">

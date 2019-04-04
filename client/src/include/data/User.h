@@ -64,8 +64,10 @@ class Login {
   }
 
   void getGamers(QSqlQueryModel* model) {
-    model->setQuery("SELECT uid,real_name,level,exp FROM user WHERE gamer=1",
-                    db);
+    model->setQuery(
+        "SELECT uid,real_name,level,exp FROM user WHERE gamer=1 ORDER BY exp "
+        "DESC",
+        db);
     model->setHeaderData(0, Qt::Horizontal, "User ID");
     model->setHeaderData(1, Qt::Horizontal, "Real Name");
     model->setHeaderData(2, Qt::Horizontal, "Level");
@@ -73,8 +75,10 @@ class Login {
   }
 
   void getAdmins(QSqlQueryModel* model) {
-    model->setQuery("SELECT uid,real_name,level,exp FROM user WHERE gamer=0",
-                    db);
+    model->setQuery(
+        "SELECT uid,real_name,level,exp FROM user WHERE gamer=0 ORDER BY exp "
+        "DESC",
+        db);
     model->setHeaderData(0, Qt::Horizontal, "User ID");
     model->setHeaderData(1, Qt::Horizontal, "Real Name");
     model->setHeaderData(2, Qt::Horizontal, "Level");
@@ -103,7 +107,10 @@ class Login {
 
  private:
   Login(const char* path = "./user.db") {
-    db = QSqlDatabase::addDatabase("QSQLITE");
+    if (QSqlDatabase::contains("qt_sql_default_connection"))
+      db = QSqlDatabase::database("qt_sql_default_connection");
+    else
+      db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(path);
     if (!db.open()) {
       qDebug() << db.lastError();

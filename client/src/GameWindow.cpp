@@ -4,8 +4,8 @@
 #include <QPropertyAnimation>
 #include <QStyle>
 
+#include <data/User.h>
 #include <data/Word.h>
-#include <data/login.h>
 #include <widgets/CustomWidget.h>
 #include <widgets/GameWindow.h>
 #include <widgets/QGameTextField.h>
@@ -69,7 +69,6 @@ void GameWindow::updateUI() {
   ui->userName->setText("User Name: " + QString::fromStdString(gamer.uid));
   ui->userLevel->setText(QString("User Level: %1").arg(gamer.level));
   ui->userExp->setText(QString("User Exp: %1").arg(gamer.exp));
-  qDebug() << "Out" << QString::fromStdString(gamer.uid);
 }
 
 // ==
