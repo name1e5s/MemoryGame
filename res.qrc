@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/ui">
+        <file>ui/MemoryGame.qml</file>
+        <file>ui/LoginPage.qml</file>
+        <file>ui/fontawesome.ttf</file>
+        <file>ui/RegisterPage.qml</file>
+        <file>ui/GamePage.qml</file>
+        <file>ui/InfoPage.qml</file>
+        <file>ui/UsersPage.qml</file>
+        <file>ui/AdminPage.qml</file>
+    </qresource>
+</RCC>
