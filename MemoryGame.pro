@@ -28,10 +28,10 @@ HEADERS += \
     common.h \
     db_user.h \
     gamer_handler.h \
-    db_users.h \
     db_word.h \
-    db_words.h \
     table_model.h \
     login_handler.h \
     user_handler.h \
-    admin_handler.h
+    admin_handler.h \
+    table_model_user.h \
+    table_model_word.h

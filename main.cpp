@@ -4,8 +4,8 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <db_user.h>
-#include <db_users.h>
-#include <db_words.h>
+#include <table_model_user.h>
+#include <table_model_word.h>
 #include <login_handler.h>
 #include <admin_handler.h>
 #include <gamer_handler.h>

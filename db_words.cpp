@@ -1,4 +1,4 @@
-#include "db_words.h"
+#include <table_model_word.h>
 #include <db_word.h>
 
 WordTableModel::WordTableModel(QObject *parent) : QmlAbstractTableModel(parent) {

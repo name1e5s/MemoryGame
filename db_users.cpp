@@ -1,6 +1,6 @@
 #include <QSqlRecord>
 #include <QSqlField>
-#include <db_users.h>
+#include <table_model_user.h>
 #include <db_user.h>
 
 UserTableModel::UserTableModel(QObject *parent) : QmlAbstractTableModel(parent) {
