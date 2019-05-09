@@ -5,5 +5,5 @@
 GamerHandler::GamerHandler(QObject *parent) : UserHandler(parent) {}
 
 QString GamerHandler::getNewWord(int difficulty) {
-    return WordDB::Instance().getWord(difficulty);
+  return WordDB::Instance().getWord(difficulty);
 }

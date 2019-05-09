@@ -5,13 +5,12 @@
 #include <common.h>
 #include <user_handler.h>
 
-class GamerHandler : public UserHandler
-{
-    Q_OBJECT
+class GamerHandler : public UserHandler {
+  Q_OBJECT
 
 public:
-    explicit GamerHandler(QObject *parent = nullptr);
-    Q_INVOKABLE QString getNewWord(int difficulty);
+  explicit GamerHandler(QObject *parent = nullptr);
+  Q_INVOKABLE QString getNewWord(int difficulty);
 };
 
 #endif // GAMER_HANDLER_H
