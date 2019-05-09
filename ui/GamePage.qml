@@ -14,8 +14,9 @@ Page {
     property alias realName: game_handler.realName
     property alias levelPassed: game_handler.levelPassed
     property alias experience: game_handler.experience
-    property int level: 0
+    property int level: 1
     property int cycles: 0
+    property int rounds: 0
     property string resultWord: ""
     property string faceString: '\uf4da'
     property string answerString: '\uf058'
@@ -25,7 +26,7 @@ Page {
     }
 
     onExperienceChanged: {
-        level = (Math.sqrt(1 + 8 * experience / 50) + 1)/2
+        level = (Math.sqrt(1 + 8 * experience / 50) + 1)/2 + 1
     }
 
     onCyclesChanged: {
@@ -100,10 +101,20 @@ Page {
                     if(text === resultWord) {
                         answerString = '\uf058'
                         answerText.color = Material.accent
-                        experience = experience + level * 10
+                        experience = experience + level * (difficultySpinBox.value + 1) * 5
                         cycles += 1
                         levelPassed += 1
-                        newGame()
+                        rounds -= 1
+                        console.log(rounds)
+                        if(rounds === 0) {
+                            inputTextField.enabled = false
+                            gameText.text = "You Win!"
+                            game_handler.updateUser()
+                            startGameButton.enabled = true
+                            levelPassed ++
+                        } else {
+                            newGame()
+                        }
                     } else {
                         answerString = '\uf057'
                         answerText.color = Material.color(Material.Red)
@@ -237,6 +248,7 @@ Page {
                     font.pointSize: 14
                     font.family: "fontawesome"
                     onClicked: {
+                        rounds = level
                         game_handler.updateUser()
                         newGame()
                     }

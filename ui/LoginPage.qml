@@ -62,6 +62,9 @@ Page {
                     color: Material.accent
                 }
             }
+            Keys.onReturnPressed: {
+                login()
+            }
         }
 
         TextField {
@@ -96,6 +99,9 @@ Page {
                     color: Material.accent
                 }
             }
+            Keys.onReturnPressed: {
+                login()
+            }
         }
 
             RowLayout {
@@ -127,25 +133,7 @@ Page {
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 id: loginButton
                 text: qsTr("Login")
-                onClicked: {
-                    if(login_handler.login(gamerButton.checked? 1 : 0, loginUsername.text, loginPassword.text)) {
-                        if(gamerButton.checked)
-                            stackView.push("qrc:/ui/ui/GamePage.qml",  {"userName" : login_handler.getUserName(),
-                                                                        "realName" : login_handler.getRealName(),
-                                                                        "levelPassed": login_handler.getLevelPassed(),
-                                                                        "experience": login_handler.getExperience()})
-                        else
-                            stackView.push("qrc:/ui/ui/AdminPage.qml", {"userName" : login_handler.getUserName(),
-                                                                        "realName" : login_handler.getRealName(),
-                                                                        "levelPassed": login_handler.getLevelPassed(),
-                                                                        "experience": login_handler.getExperience()})
-                    } else {
-                        popup.popMessage = "Login Failed!"
-                        popup.open()
-                    }
-                    loginUsername.clear()
-                    loginPassword.clear()
-                }
+                onClicked: login()
             }
 
             Button {
@@ -159,5 +147,25 @@ Page {
                 }
             }
         }
+    }
+
+    function login() {
+        if(login_handler.login(gamerButton.checked? 1 : 0, loginUsername.text, loginPassword.text)) {
+            if(gamerButton.checked)
+                stackView.push("qrc:/ui/ui/GamePage.qml",  {"userName" : login_handler.getUserName(),
+                                                            "realName" : login_handler.getRealName(),
+                                                            "levelPassed": login_handler.getLevelPassed(),
+                                                            "experience": login_handler.getExperience()})
+            else
+                stackView.push("qrc:/ui/ui/AdminPage.qml", {"userName" : login_handler.getUserName(),
+                                                            "realName" : login_handler.getRealName(),
+                                                            "levelPassed": login_handler.getLevelPassed(),
+                                                            "experience": login_handler.getExperience()})
+        } else {
+            popup.popMessage = "Login Failed!"
+            popup.open()
+        }
+        loginUsername.clear()
+        loginPassword.clear()
     }
 }

@@ -17,7 +17,7 @@ Page {
     property variant colname: ["Word\n(word)", "Difficulty\n(dificulty = 1/2/3)", "Add User\n(uname)"]
 
     onExperienceChanged: {
-        level = (Math.sqrt(1 + 8 * experience / 50) + 1)/2
+        level = (Math.sqrt(1 + 8 * experience / 50) + 1)/2 + 1
     }
 
     AdminHandler {
@@ -35,7 +35,7 @@ Page {
         TableView {
                 id: adminTableView
 
-                columnWidthProvider: function (column) { return width / 4; }
+                columnWidthProvider: function (column) { return (width - 70) / 3; }
                 rowHeightProvider: function (column) { return 60; }
                 Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width * 0.6
@@ -200,32 +200,6 @@ Page {
                         addWord()
                     }
                 }
-
-                SpinBox {
-                    id: difficultySpinBox
-                    Layout.preferredWidth: parent.width
-                    from: 0
-                    to: items.length - 1
-                    value: 1
-
-                    property var items: ["Easy", "Normal", "Hard"]
-
-                    validator: RegExpValidator {
-                        regExp: new RegExp("(Easy|Normal|Hard)", "i")
-                    }
-
-                    textFromValue: function(value) {
-                        return items[value];
-                    }
-
-                    valueFromText: function(text) {
-                        for (var i = 0; i < items.length; ++i) {
-                            if (items[i].toLowerCase().indexOf(text.toLowerCase()) === 0)
-                                return i
-                        }
-                        return sb.value
-                    }
-                }
             }
 
             RowLayout {
@@ -291,11 +265,11 @@ Page {
 
     function addWord() {
         if(wordBox.text === "" ||
-                (!adminTable.addWord(wordBox.text, userName, difficultySpinBox.value + 1))) {
+                (!adminTable.addWord(wordBox.text, userName))) {
             popup.popMessage = "Add word Failed!"
             popup.open()
         } else {
-            experience += level * 10
+            experience += (level + 1) * 10
             levelPassed ++
         }
 

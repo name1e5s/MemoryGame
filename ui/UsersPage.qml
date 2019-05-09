@@ -19,10 +19,10 @@ Page {
         TableView {
                 id: tableView
 
-                columnWidthProvider: function (column) { return width / 5; }
+                columnWidthProvider: function (column) { return (width - 70) / 4; }
                 rowHeightProvider: function (column) { return 60; }
                 Layout.preferredHeight: parent.height
-                Layout.preferredWidth: parent.width * 0.7
+                Layout.preferredWidth: parent.width * 0.6
                 leftMargin: rowsHeader.implicitWidth
                 topMargin: columnsHeader.implicitHeight
                 model: UserTableModel {

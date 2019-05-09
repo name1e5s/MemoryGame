@@ -188,7 +188,7 @@ Page {
                         popup.popMessage = "Password unmatch!"
                         popup.open()
                     } else {
-                        if(user_handler.regis(regGamer.checked? 1:0, uname, rname, pass1)) {
+                        if(login_handler.regis(regGamer.checked? 1:0, uname, rname, pass1)) {
                             stackView.pop()
                         } else {
                             popup.popMessage = "Register Failed!"

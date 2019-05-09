@@ -6,10 +6,19 @@ WordTableModel::WordTableModel(QObject *parent)
   WordDB::Instance().getWords(m_result);
 }
 
-bool WordTableModel::addWord(QString word, QString uname, int difficulty) {
+int getDifficulty(QString s) {
+  if (s.length() >= 7) {
+    return 3;
+  } else if (s.length() >= 4) {
+    return 2;
+  }
+  return 1;
+}
+
+bool WordTableModel::addWord(QString word, QString uname) {
   beginResetModel();
   m_result.clear();
-  bool result = WordDB::Instance().addWord(word, uname, difficulty);
+  bool result = WordDB::Instance().addWord(word, uname, getDifficulty(word));
   WordDB::Instance().getWords(m_result);
   endResetModel();
   return result;
