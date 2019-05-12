@@ -11,7 +11,7 @@ SocketClient::SocketClient(std::string address, int port) {
   m_server.sin_family = AF_INET;
   m_server.sin_port = htons(port);
 
-  m_tag = NULL;
+  m_tag = 0;
   m_disconnectListener = NULL;
   m_connected = false;
   m_threadStopped = false;
@@ -20,7 +20,7 @@ SocketClient::SocketClient(std::string address, int port) {
 
 SocketClient::SocketClient(int socket) {
   m_socket = socket;
-  m_tag = NULL;
+  m_tag = 0;
   m_disconnectListener = NULL;
   m_connected = true;
   m_threadStopped = false;
@@ -29,11 +29,7 @@ SocketClient::SocketClient(int socket) {
   temp.detach();
 }
 
-SocketClient::~SocketClient() {
-  if (m_tag != NULL && m_dataInterface.mDestroy) {
-    m_dataInterface.mDestroy(m_tag);
-  }
-}
+SocketClient::~SocketClient() {}
 
 int SocketClient::getSocket() { return m_socket; }
 
@@ -121,12 +117,9 @@ void SocketClient::setDisconnectListener(
   m_disconnectListener = disconnectListener;
 }
 
-void SocketClient::setTag(void *tag, DataInterface interface) {
-  m_tag = tag;
-  m_dataInterface = interface;
-}
+void SocketClient::setTag(uint32_t tag) { m_tag = tag; }
 
-void *SocketClient::getTag() { return m_tag; }
+uint32_t SocketClient::getTag() { return m_tag; }
 
 void SocketClient::receiveThread() {
   std::string key, message;

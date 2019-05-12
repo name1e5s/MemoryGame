@@ -26,7 +26,7 @@ public:
   ~SocketClient();
 
   int getSocket();
-  void *getTag();
+  uint32_t getTag();
 
   bool connect();
   void disconnect();
@@ -35,11 +35,10 @@ public:
   void addListener(std::string key,
                    void (*messageListener)(SocketClient *, std::string));
   void setDisconnectListener(void (*disconnectListener)(SocketClient *));
-  void setTag(void *tag, DataInterface interface);
+  void setTag(uint32_t tag);
 
 private:
-  void *m_tag;
-  DataInterface m_dataInterface;
+  uint32_t m_tag;
 
   struct sockaddr_in m_server;
   std::string m_address;
