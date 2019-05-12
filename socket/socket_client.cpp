@@ -141,7 +141,7 @@ void SocketClient::receiveThread() {
       }
     } else if (code1 != -1 && code2 != -1) {
       if (m_messageListenerMap[key] != NULL) {
-        (*m_messageListenerMap[key])(this, message.c_str());
+        (*m_messageListenerMap[key])(this, message);
       }
     }
   }
