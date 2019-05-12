@@ -18,9 +18,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
     db_user.cpp \
-    db_word.cpp
+    db_word.cpp \
+    uid.cpp \
+    request_handler.cpp
 
 HEADERS += \
     common.h \
     db_user.h \
-    db_word.h
+    db_word. \
+    uid.h \
+    db_word.h \
+    request_handler.h
+
+INCLUDEPATH += ../socket
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-Socket-Desktop-Debug/release/ -lsocket
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-Socket-Desktop-Debug/debug/ -lsocket
+else:unix: LIBS += -L$$PWD/../build-Socket-Desktop-Debug/ -lsocket
+
+INCLUDEPATH += $$PWD/.
+DEPENDPATH += $$PWD/.
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-Socket-Desktop-Debug/release/libsocket.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-Socket-Desktop-Debug/debug/libsocket.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-Socket-Desktop-Debug/release/socket.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-Socket-Desktop-Debug/debug/socket.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../build-Socket-Desktop-Debug/libsocket.a

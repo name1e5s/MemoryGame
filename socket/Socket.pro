@@ -26,8 +26,8 @@ SOURCES += \
     socket_client.cpp
 
 HEADERS += \
-    socker_server.h \
-    socket_client.h
+    socket_client.h \
+    socket_server.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
