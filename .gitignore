@@ -1,2 +1,9 @@
 *.user
 build*
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.gz
+*.toc
