@@ -10,16 +10,29 @@ Page {
     Material.theme: Material.Light
     Material.accent: Material.Teal
 
-    property alias userName: game_handler.userName
-    property alias realName: game_handler.realName
-    property alias levelPassed: game_handler.levelPassed
-    property alias experience: game_handler.experience
+    property string userName: ""
+    property string realName: ""
+    property int levelPassed: 0
+    property int experience: 0
     property int level: 1
     property int cycles: 0
     property int rounds: 0
     property string resultWord: ""
     property string faceString: '\uf4da'
     property string answerString: '\uf058'
+
+    Connections {
+        target: game_client
+        onGetWordResult: {
+                resultWord = word
+                gameText.text = word
+                faceText.text = '\uf35b'
+                inputTextField.enabled = false
+                gameTextChangedTimer.interval = (3 - difficultySpinBox.value) * 1000
+                gameTextChangedTimer.start()
+                startGameButton.enabled = false
+        }
+    }
 
     onVisibleChanged: {
         cycles = 0
@@ -44,10 +57,6 @@ Page {
                 faceString = '\uf567'
         }
         faceText.text = faceString
-    }
-
-    GameHandler {
-        id: game_handler
     }
 
     Timer {
@@ -109,7 +118,7 @@ Page {
                         if(rounds === 0) {
                             inputTextField.enabled = false
                             gameText.text = "You Win!"
-                            game_handler.updateUser()
+                            updateUser()
                             startGameButton.enabled = true
                             levelPassed ++
                         } else {
@@ -249,7 +258,7 @@ Page {
                     font.family: "fontawesome"
                     onClicked: {
                         rounds = level
-                        game_handler.updateUser()
+                        updateUser()
                         newGame()
                     }
                 }
@@ -264,7 +273,7 @@ Page {
                     onClicked: {
                         inputTextField.enabled = false
                         gameText.text = "Welcome!"
-                        game_handler.updateUser()
+                        updateUser()
                         startGameButton.enabled = true
                     }
                 }
@@ -277,7 +286,7 @@ Page {
                     font.pointSize: 14
                     font.family: "fontawesome"
                     onClicked: {
-                        game_handler.updateUser()
+                        updateUser()
                         stackView.push("qrc:/ui/ui/InfoPage.qml", {"userName" : userName,
                                                                    "realName" : realName,
                                                                 "levelPassed" : levelPassed,
@@ -294,7 +303,7 @@ Page {
                     font.pointSize: 14
                     font.family: "fontawesome"
                     onClicked: {
-                        game_handler.updateUser()
+                        updateUser()
                         stackView.push("qrc:/ui/ui/UsersPage.qml")
                     }
                 }
@@ -307,7 +316,7 @@ Page {
                     font.pointSize: 14
                     font.family: "fontawesome"
                     onClicked: {
-                        game_handler.updateUser()
+                        updateUser()
                         stackView.pop()
                     }
                 }
@@ -316,12 +325,10 @@ Page {
     }
 
     function newGame() {
-        resultWord = game_handler.getNewWord(difficultySpinBox.value + 1)
-        gameText.text = resultWord
-        faceText.text = '\uf35b'
-        inputTextField.enabled = false
-        gameTextChangedTimer.interval = (3 - difficultySpinBox.value) * 1000
-        gameTextChangedTimer.start()
-        startGameButton.enabled = false
+        game_client.sendRequest("getWordRequest", (difficultySpinBox.value + 1).toString())
+    }
+
+    function updateUser() {
+        game_client.sendRequest("updateUserRequest", userName + "$" + levelPassed.toString() + "$" + experience.toString())
     }
 }

@@ -93,6 +93,13 @@ bool UserDB::updateUser(const BaseUser *user) {
   return qry.exec();
 }
 
+bool UserDB::updateUser(QString userName, int levelPassed, int experience) {
+  QSqlQuery qry;
+  QString qryStr = "UPDATE user SET level=%1,exp=%2 WHERE uname='%4';";
+  qry.prepare(qryStr.arg(levelPassed).arg(experience).arg(userName));
+  return qry.exec();
+}
+
 void UserDB::getGamers(QVector<QVector<QString>> &model) {
   QSqlQuery qry;
   QString qryStr =

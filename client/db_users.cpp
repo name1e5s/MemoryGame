@@ -1,23 +1,20 @@
 #include <QSqlField>
 #include <QSqlRecord>
+#include <client.h>
 #include <db_user.h>
 #include <table_model_user.h>
 
 UserTableModel::UserTableModel(QObject *parent)
-    : QmlAbstractTableModel(parent) {
-  UserDB::Instance().getGamers(m_result);
+    : QmlAbstractTableModel(parent) {}
+
+void UserTableModel::init() {
+  Client::Instance().sendRequest("getGamersRequest", "");
 }
 
 void UserTableModel::searchGamer(QString query) {
-  beginResetModel();
-  m_result.clear();
-  UserDB::Instance().searchGamers(m_result, query);
-  endResetModel();
+  Client::Instance().sendRequest("searchGamersRequest", query);
 }
 
 void UserTableModel::searchAdmin(QString query) {
-  beginResetModel();
-  m_result.clear();
-  UserDB::Instance().searchAdmins(m_result, query);
-  endResetModel();
+  Client::Instance().sendRequest("searchAdminsRequest", query);
 }

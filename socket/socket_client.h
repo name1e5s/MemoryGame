@@ -10,14 +10,6 @@
 #include <unistd.h>
 #include <vector>
 
-struct DataInterface {
-  std::function<void(void *)> mDestroy;
-
-  DataInterface() {}
-
-  DataInterface(std::function<void(void *)> destroy) { mDestroy = destroy; }
-};
-
 class SocketClient {
 public:
   SocketClient();
@@ -30,7 +22,6 @@ public:
 
   bool connect();
   void disconnect();
-  bool send(std::string key, std::vector<std::string> messages);
   bool send(std::string key, std::string message);
   void addListener(std::string key,
                    void (*messageListener)(SocketClient *, std::string));

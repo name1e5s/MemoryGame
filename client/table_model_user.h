@@ -7,6 +7,7 @@ class UserTableModel : public QmlAbstractTableModel {
 
 public:
   explicit UserTableModel(QObject *parent = nullptr);
+  void init();
   Q_INVOKABLE void searchGamer(QString query);
   Q_INVOKABLE void searchAdmin(QString query);
 };

@@ -7,7 +7,8 @@ class WordTableModel : public QmlAbstractTableModel {
 
 public:
   explicit WordTableModel(QObject *parent = nullptr);
-  Q_INVOKABLE bool addWord(QString word, QString uname);
+  void init();
+  Q_INVOKABLE void addWord(QString word, QString uname);
   Q_INVOKABLE void searchWords(QString query);
 };
 

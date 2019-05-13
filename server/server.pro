@@ -25,7 +25,7 @@ SOURCES += \
 HEADERS += \
     common.h \
     db_user.h \
-    db_word. \
+    db_word.h \
     uid.h \
     db_word.h \
     request_handler.h

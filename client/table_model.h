@@ -4,6 +4,7 @@
 #include <QSqlQueryModel>
 #include <QVector>
 #include <QtSql>
+#include <utility.h>
 
 class QmlAbstractTableModel : public QAbstractTableModel {
   Q_OBJECT
@@ -28,6 +29,14 @@ public:
 
 signals:
   void columnChanged();
+public slots:
+  void onModelUpdate(QString result) {
+    beginResetModel();
+    qDebug() << result;
+    m_result.clear();
+    m_result = StdStrToQVecQVecStr(result.toStdString());
+    endResetModel();
+  }
 
 protected:
   int m_column;

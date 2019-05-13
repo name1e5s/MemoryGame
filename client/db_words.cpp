@@ -1,9 +1,12 @@
+#include <client.h>
 #include <db_word.h>
 #include <table_model_word.h>
 
 WordTableModel::WordTableModel(QObject *parent)
-    : QmlAbstractTableModel(parent) {
-  WordDB::Instance().getWords(m_result);
+    : QmlAbstractTableModel(parent) {}
+
+void WordTableModel::init() {
+  Client::Instance().sendRequest("getWordsRequest", "");
 }
 
 int getDifficulty(QString s) {
@@ -15,18 +18,13 @@ int getDifficulty(QString s) {
   return 1;
 }
 
-bool WordTableModel::addWord(QString word, QString uname) {
-  beginResetModel();
-  m_result.clear();
-  bool result = WordDB::Instance().addWord(word, uname, getDifficulty(word));
-  WordDB::Instance().getWords(m_result);
-  endResetModel();
-  return result;
+void WordTableModel::addWord(QString word, QString uname) {
+  Client::Instance().sendRequest("addWordRequest",
+                                 word + "$" + uname + "$" +
+                                     QString::number(getDifficulty(word)));
+  init();
 }
 
 void WordTableModel::searchWords(QString query) {
-  beginResetModel();
-  m_result.clear();
-  WordDB::Instance().searchWords(m_result, query);
-  endResetModel();
+  Client::Instance().sendRequest("searchWordsRequest", query);
 }

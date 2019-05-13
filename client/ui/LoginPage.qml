@@ -8,6 +8,26 @@ Page {
 
     Material.theme: Material.Light
     Material.accent: Material.Teal
+    Connections {
+        target: game_client
+        onLoginResult: {
+            if(isSuccess) {
+                if(gamerButton.checked)
+                    stackView.push("qrc:/ui/ui/GamePage.qml",  {"userName" : userName,
+                                                                "realName" : realName,
+                                                                "levelPassed": levelPassed,
+                                                                "experience": exp})
+                else
+                    stackView.push("qrc:/ui/ui/AdminPage.qml", {"userName" : userName,
+                                       "realName" : realName,
+                                       "levelPassed": levelPassed,
+                                       "experience": exp})
+            } else {
+                popup.popMessage = "Login Failed!"
+                popup.open()
+            }
+        }
+    }
 
     Rectangle {
         id: logoRect
@@ -150,21 +170,7 @@ Page {
     }
 
     function login() {
-        if(login_handler.login(gamerButton.checked? 1 : 0, loginUsername.text, loginPassword.text)) {
-            if(gamerButton.checked)
-                stackView.push("qrc:/ui/ui/GamePage.qml",  {"userName" : login_handler.getUserName(),
-                                                            "realName" : login_handler.getRealName(),
-                                                            "levelPassed": login_handler.getLevelPassed(),
-                                                            "experience": login_handler.getExperience()})
-            else
-                stackView.push("qrc:/ui/ui/AdminPage.qml", {"userName" : login_handler.getUserName(),
-                                                            "realName" : login_handler.getRealName(),
-                                                            "levelPassed": login_handler.getLevelPassed(),
-                                                            "experience": login_handler.getExperience()})
-        } else {
-            popup.popMessage = "Login Failed!"
-            popup.open()
-        }
+        game_client.sendRequest("loginRequest", (gamerButton.checked? "1" : "0") + "$" +  loginUsername.text + "$" + loginPassword.text);
         loginUsername.clear()
         loginPassword.clear()
     }

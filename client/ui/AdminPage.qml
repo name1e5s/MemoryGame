@@ -9,23 +9,33 @@ Page {
 
     Material.theme: Material.Light
     Material.accent: Material.Teal
-    property alias userName: admin_handler.userName
-    property alias realName: admin_handler.realName
-    property alias levelPassed: admin_handler.levelPassed
-    property alias experience: admin_handler.experience
+    property string userName: ""
+    property string realName: ""
+    property int levelPassed: 0
+    property int experience: 0
     property int level: 0
     property variant colname: ["Word\n(word)", "Difficulty\n(dificulty = 1/2/3)", "Add User\n(uname)"]
+
+    Connections {
+        target: game_client
+        onAddWordResult: {
+            if(isSuccess) {
+                experience += (level + 1) * 10
+                levelPassed ++
+                updateUser()
+            } else {
+                popup.popMessage = "Add word Failed!"
+                popup.open()
+            }
+        }
+    }
 
     onExperienceChanged: {
         level = (Math.sqrt(1 + 8 * experience / 50) + 1)/2 + 1
     }
 
-    AdminHandler {
-        id: admin_handler
-    }
-
     onVisibleChanged: {
-        admin_handler.updateUser()
+        updateUser()
     }
 
     RowLayout {
@@ -41,10 +51,7 @@ Page {
                 Layout.preferredWidth: parent.width * 0.6
                 leftMargin: rowsHeader.implicitWidth
                 topMargin: columnsHeader.implicitHeight
-                model: WordTableModel {
-                    id: adminTable
-                    column: 3
-                }
+                model: wordTableModel
                 delegate: Item {
                     Text {
                         text: display
@@ -264,21 +271,21 @@ Page {
     }
 
     function addWord() {
-        if(wordBox.text === "" ||
-                (!adminTable.addWord(wordBox.text, userName))) {
+        if(wordBox.text === "") {
             popup.popMessage = "Add word Failed!"
             popup.open()
         } else {
-            experience += (level + 1) * 10
-            levelPassed ++
+            wordTableModel.addWord(wordBox.text, userName)
         }
-
-        admin_handler.updateUser()
         wordBox.clear()
     }
 
     function searchWord() {
-        adminTable.searchWords(searchBox.text === ""? "1 ORDER BY difficulty" : searchBox.text)
+        wordTableModel.searchWords(searchBox.text === ""? "1 ORDER BY difficulty" : searchBox.text)
         searchBox.clear()
+    }
+
+    function updateUser() {
+        game_client.sendRequest("updateUserRequest", userName + "$" + levelPassed.toString() + "$" + experience.toString())
     }
 }

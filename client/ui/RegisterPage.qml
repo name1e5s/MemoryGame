@@ -6,7 +6,17 @@ import QtQuick.Layouts 1.3
 Page {
     Material.theme: Material.Light
     Material.accent: Material.Teal
-
+    Connections {
+        target: game_client
+        onRegisterResult: {
+            if(isSuccess) {
+                stackView.pop()
+            } else {
+                popup.popMessage = "Register Failed!"
+                popup.open()
+            }
+        }
+    }
     ColumnLayout {
         width: parent.width
         spacing: 15
@@ -188,12 +198,7 @@ Page {
                         popup.popMessage = "Password unmatch!"
                         popup.open()
                     } else {
-                        if(login_handler.regis(regGamer.checked? 1:0, uname, rname, pass1)) {
-                            stackView.pop()
-                        } else {
-                            popup.popMessage = "Register Failed!"
-                            popup.open()
-                        }
+                        game_client.sendRequest("registerRequest", (regGamer.checked? "1" : "0") + "$" + uname + "$" + rname + "$" + pass1)
                     }
                 }
             }

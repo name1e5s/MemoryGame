@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT       -= gui
 
 TARGET = socket
 TEMPLATE = lib
@@ -23,11 +23,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     socket_server.cpp \
-    socket_client.cpp
+    socket_client.cpp \
+    utility.cpp
 
 HEADERS += \
     socket_client.h \
-    socket_server.h
+    socket_server.h \
+    utility.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

@@ -25,10 +25,7 @@ Page {
                 Layout.preferredWidth: parent.width * 0.6
                 leftMargin: rowsHeader.implicitWidth
                 topMargin: columnsHeader.implicitHeight
-                model: UserTableModel {
-                    id: gamerTable
-                    column: 4
-                }
+                model: userTableModel
                 delegate: Item {
                     Text {
                         text: display
@@ -183,12 +180,11 @@ Page {
     function searchGamer() {
         if(gamerButton.checked) {
             columnsRepeater.itemAt(3).text = "Level Passed\n(level)"
-            gamerTable.searchGamer(searchBox.text === ""? "1 ORDER BY exp DESC" : searchBox.text)
+            userTableModel.searchGamer(searchBox.text === ""? "1 ORDER BY exp DESC" : searchBox.text)
         } else {
             columnsRepeater.itemAt(3).text = "Word Added\n(level)"
-            gamerTable.searchAdmin(searchBox.text === ""? "1 ORDER BY exp DESC" : searchBox.text)
+            userTableModel.searchAdmin(searchBox.text === ""? "1 ORDER BY exp DESC" : searchBox.text)
         }
-
         searchBox.clear()
     }
 }
