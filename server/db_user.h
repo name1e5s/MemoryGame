@@ -10,6 +10,7 @@ public:
 
   bool registerUser(const RegisterRequest &info);
   BaseUser loginUser(const LoginRequest &info);
+  void logoutUser(QString userName);
   bool updateUser(const BaseUser *user);
   bool updateUser(QString userName, int levelPassed, int experience);
   void getAdmins(QVector<QVector<QString>> &model);

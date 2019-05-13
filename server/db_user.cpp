@@ -1,5 +1,8 @@
+#include <QSet>
 #include <common.h>
 #include <db_user.h>
+
+QSet<QString> userSet;
 
 UserDB *UserDB::_instance = 0;
 
@@ -74,15 +77,21 @@ BaseUser UserDB::loginUser(const LoginRequest &info) {
       "WHERE uname = '%1' AND password = '%2' AND utype = %3 LIMIT 1";
   qry.prepare(
       qryStr.arg(info.userName).arg(info.userPassword).arg(info.userType));
-  if (qry.exec() && qry.next()) {
+  if (qry.exec() && qry.next() && !userSet.contains(info.userName)) {
     user.userName = qry.value(0).toString();
     user.realName = qry.value(1).toString();
     user.levelPassed = qry.value(2).toInt();
     user.experience = qry.value(3).toInt();
+    userSet.insert(info.userName);
   } else {
     user.experience = -1;
   }
   return user;
+}
+
+void UserDB::logoutUser(QString userName) {
+  if (userSet.contains(userName))
+    userSet.remove(userName);
 }
 
 bool UserDB::updateUser(const BaseUser *user) {
@@ -102,8 +111,8 @@ bool UserDB::updateUser(QString userName, int levelPassed, int experience) {
 
 void UserDB::getGamers(QVector<QVector<QString>> &model) {
   QSqlQuery qry;
-  QString qryStr =
-      "SELECT uname,rname,exp,level FROM user WHERE utype=1 ORDER BY exp DESC";
+  QString qryStr = "SELECT uname,rname,exp,level FROM user WHERE "
+                   "utype=1 ORDER BY exp DESC";
   qry.prepare(qryStr);
   if (qry.exec()) {
     while (qry.next()) {
@@ -112,6 +121,8 @@ void UserDB::getGamers(QVector<QVector<QString>> &model) {
       tmp.push_back(qry.value(1).toString());
       tmp.push_back(qry.value(2).toString());
       tmp.push_back(qry.value(3).toString());
+      tmp.push_back(userSet.contains(qry.value(0).toString()) ? "Online"
+                                                              : "Offline");
       model.push_back(tmp);
     }
   }
@@ -129,6 +140,8 @@ void UserDB::searchGamers(QVector<QVector<QString>> &model, QString query) {
       tmp.push_back(qry.value(1).toString());
       tmp.push_back(qry.value(2).toString());
       tmp.push_back(qry.value(3).toString());
+      tmp.push_back(userSet.contains(qry.value(0).toString()) ? "Online"
+                                                              : "Offline");
       model.push_back(tmp);
     }
   }
@@ -136,8 +149,8 @@ void UserDB::searchGamers(QVector<QVector<QString>> &model, QString query) {
 
 void UserDB::getAdmins(QVector<QVector<QString>> &model) {
   QSqlQuery qry;
-  QString qryStr =
-      "SELECT uname,rname,exp,level FROM user WHERE utype=0 ORDER BY exp DESC";
+  QString qryStr = "SELECT uname,rname,exp,level FROM user WHERE "
+                   "utype=0 ORDER BY exp DESC";
   qry.prepare(qryStr);
   if (qry.exec()) {
     while (qry.next()) {
@@ -146,6 +159,8 @@ void UserDB::getAdmins(QVector<QVector<QString>> &model) {
       tmp.push_back(qry.value(1).toString());
       tmp.push_back(qry.value(2).toString());
       tmp.push_back(qry.value(3).toString());
+      tmp.push_back(userSet.contains(qry.value(0).toString()) ? "Online"
+                                                              : "Offline");
       model.push_back(tmp);
     }
   }
@@ -163,6 +178,8 @@ void UserDB::searchAdmins(QVector<QVector<QString>> &model, QString query) {
       tmp.push_back(qry.value(1).toString());
       tmp.push_back(qry.value(2).toString());
       tmp.push_back(qry.value(3).toString());
+      tmp.push_back(userSet.contains(qry.value(0).toString()) ? "Online"
+                                                              : "Offline");
       model.push_back(tmp);
     }
   }

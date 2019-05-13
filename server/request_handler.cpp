@@ -2,6 +2,7 @@
 #include <common.h>
 #include <db_user.h>
 #include <db_word.h>
+#include <mutex>
 #include <request_handler.h>
 #include <socket_client.h>
 #include <socket_server.h>
@@ -12,6 +13,8 @@
 
 using std::vector;
 vector<SocketClient *> RequestHandler::clients;
+std::mutex user_mutex;
+std::mutex word_mutex;
 
 using namespace RequestHandler;
 
@@ -39,6 +42,7 @@ static void onDisconnect(SocketClient *socket) {
 }
 
 static void onLogin(SocketClient *client, std::string request) {
+  std::lock_guard<std::mutex> lock(user_mutex);
   QStringList requestList = QString::fromStdString(request).split('$');
   LoginRequest loginRequest = {requestList.at(0).toInt(), requestList.at(1),
                                requestList.at(2)};
@@ -50,7 +54,12 @@ static void onLogin(SocketClient *client, std::string request) {
   client->send("loginResult", result.toStdString());
 }
 
+static void onLogout(UNUSED SocketClient *client, std::string request) {
+  UserDB::Instance().logoutUser(QString::fromStdString(request));
+}
+
 static void onRegister(SocketClient *client, std::string request) {
+  std::lock_guard<std::mutex> lock(user_mutex);
   QStringList requestList = QString::fromStdString(request).split('$');
   RegisterRequest registerRequest = {requestList.at(0).toInt(),
                                      requestList.at(1), requestList.at(2),
@@ -60,6 +69,7 @@ static void onRegister(SocketClient *client, std::string request) {
 }
 
 static void onUpdateUser(SocketClient *client, std::string request) {
+  std::lock_guard<std::mutex> lock(user_mutex);
   QStringList requestList = QString::fromStdString(request).split('$');
   int isSuccess = UserDB::Instance().updateUser(requestList.at(0),
                                                 requestList.at(1).toInt(),
@@ -70,6 +80,7 @@ static void onUpdateUser(SocketClient *client, std::string request) {
 }
 
 static void onGetWord(SocketClient *client, std::string request) {
+  std::lock_guard<std::mutex> lock(word_mutex);
   QStringList requestList = QString::fromStdString(request).split('$');
   client->send(
       "getWordResult",
@@ -77,6 +88,7 @@ static void onGetWord(SocketClient *client, std::string request) {
 }
 
 static void onAddWord(SocketClient *client, std::string request) {
+  std::lock_guard<std::mutex> lock(word_mutex);
   QStringList requestList = QString::fromStdString(request).split('$');
   int isSuccess =
       WordDB::Instance().addWord(requestList.at(0), requestList.at(1),
@@ -135,4 +147,5 @@ void RequestHandler::initilizeClient(SocketClient *client) {
   client->addListener("searchAdminsRequest", onSearchAdmins);
   client->addListener("searchGamersRequest", onSearchGamers);
   client->addListener("searchWordsRequest", onSearchWords);
+  client->addListener("logoutRequest", onLogout);
 }

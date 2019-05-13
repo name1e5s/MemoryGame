@@ -317,6 +317,7 @@ Page {
                     font.family: "fontawesome"
                     onClicked: {
                         updateUser()
+                        logOut()
                         stackView.pop()
                     }
                 }
@@ -330,5 +331,9 @@ Page {
 
     function updateUser() {
         game_client.sendRequest("updateUserRequest", userName + "$" + levelPassed.toString() + "$" + experience.toString())
+    }
+
+    function logOut() {
+        game_client.sendRequest("logoutRequest", userName)
     }
 }

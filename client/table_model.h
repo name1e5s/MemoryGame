@@ -32,7 +32,6 @@ signals:
 public slots:
   void onModelUpdate(QString result) {
     beginResetModel();
-    qDebug() << result;
     m_result.clear();
     m_result = StdStrToQVecQVecStr(result.toStdString());
     endResetModel();

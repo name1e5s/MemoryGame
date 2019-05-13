@@ -10,7 +10,7 @@ Page {
     Material.theme: Material.Light
     Material.accent: Material.Teal
 
-    property variant colname: ["User\n(uname)", "Real Name\n(rname)", "Experience\n(exp)", "Level Passed\n(level)"]
+    property variant colname: ["User\n(uname)", "Real Name\n(rname)", "Experience\n(exp)", "Level Passed\n(level)","Online Status\n(online)"]
 
     RowLayout {
         width: parent.width
@@ -19,7 +19,7 @@ Page {
         TableView {
                 id: tableView
 
-                columnWidthProvider: function (column) { return (width - 70) / 4; }
+                columnWidthProvider: function (column) { return (width - 70) / 5; }
                 rowHeightProvider: function (column) { return 60; }
                 Layout.preferredHeight: parent.height
                 Layout.preferredWidth: parent.width * 0.6

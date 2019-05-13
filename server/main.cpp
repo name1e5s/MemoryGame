@@ -11,8 +11,9 @@
 
 int main(void) {
   SocketServer server(8888);
+
   if (server.start()) {
-    qDebug() << "Got cha!";
+    qDebug() << "Gotcha!";
     while (1) {
       int sock = server.accept();
       if (sock != -1) {
@@ -25,6 +26,8 @@ int main(void) {
         qDebug() << "Client" << uid << " connected !";
       }
     }
+  } else {
+    qDebug() << "Open server failed.";
   }
   defer(for (auto x : RequestHandler::clients) delete x;);
   return 0;

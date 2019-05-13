@@ -263,6 +263,7 @@ Page {
                     font.pointSize: 14
                     font.family: "fontawesome"
                     onClicked: {
+                        game_client.sendRequest("logoutRequest", userName)
                         stackView.pop()
                     }
                 }
