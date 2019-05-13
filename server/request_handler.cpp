@@ -40,7 +40,6 @@ static void onDisconnect(SocketClient *socket) {
 
 static void onLogin(SocketClient *client, std::string request) {
   QStringList requestList = QString::fromStdString(request).split('$');
-  qDebug() << requestList;
   LoginRequest loginRequest = {requestList.at(0).toInt(), requestList.at(1),
                                requestList.at(2)};
   BaseUser user = UserDB::Instance().loginUser(loginRequest);
@@ -72,7 +71,6 @@ static void onUpdateUser(SocketClient *client, std::string request) {
 
 static void onGetWord(SocketClient *client, std::string request) {
   QStringList requestList = QString::fromStdString(request).split('$');
-  qDebug() << requestList;
   client->send(
       "getWordResult",
       WordDB::Instance().getWord(requestList.at(0).toInt()).toStdString());
@@ -88,20 +86,19 @@ static void onAddWord(SocketClient *client, std::string request) {
   client->send("addWordResult", QString::number(isSuccess).toStdString());
 }
 
-static void onGetAdmins(SocketClient *client, std::string request) {
+static void onGetAdmins(SocketClient *client, UNUSED std::string request) {
   QVector<QVector<QString>> result;
   UserDB::Instance().getAdmins(result);
   client->send("getAdminsResult", QVecQVecStrToStdStr(result));
 }
 
-static void onGetGamers(SocketClient *client, std::string request) {
+static void onGetGamers(SocketClient *client, UNUSED std::string request) {
   QVector<QVector<QString>> result;
   UserDB::Instance().getGamers(result);
   client->send("getGamersResult", QVecQVecStrToStdStr(result));
-  qDebug() << QString::fromStdString(QVecQVecStrToStdStr(result));
 }
 
-static void onGetWords(SocketClient *client, std::string request) {
+static void onGetWords(SocketClient *client, UNUSED std::string request) {
   QVector<QVector<QString>> result;
   WordDB::Instance().getWords(result);
   client->send("getWordsResult", QVecQVecStrToStdStr(result));

@@ -1,5 +1,4 @@
 #include <client.h>
-#include <db_word.h>
 #include <table_model_word.h>
 
 WordTableModel::WordTableModel(QObject *parent)

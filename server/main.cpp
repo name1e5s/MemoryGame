@@ -9,7 +9,7 @@
 #include <uid.h>
 #include <unistd.h>
 
-int main(int argc, char *argv[]) {
+int main(void) {
   SocketServer server(8888);
   if (server.start()) {
     qDebug() << "Got cha!";

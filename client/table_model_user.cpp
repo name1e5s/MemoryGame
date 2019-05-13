@@ -1,7 +1,6 @@
 #include <QSqlField>
 #include <QSqlRecord>
 #include <client.h>
-#include <db_user.h>
 #include <table_model_user.h>
 
 UserTableModel::UserTableModel(QObject *parent)
